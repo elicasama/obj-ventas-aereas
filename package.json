@@ -1,0 +1,22 @@
+{
+  "name": "obj2-ventas-aereas",
+  "version": "1.0.0",
+  "description": "UNIHUR-objetos2",
+  "main": "index.js",
+  "scripts": {
+    "test": "mocha tests"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/elicasama/obj2-ventas-aereas.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/elicasama/Obj2-ventas-aereas/issues"
+  },
+  "homepage": "https://github.com/elicasama/Obj2-ventas-aereas#readme",
+  "devDependencies": {
+    "mocha": "^9.0.1"
+  }
+}
