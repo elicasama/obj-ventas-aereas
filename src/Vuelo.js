@@ -7,7 +7,7 @@ module.exports = class Vuelo {
     this.precioEstandar = precioEstandar;
   }
 
-  venderPasaje() {
-    return this.avion.cantidadDeAsientos - 1
+  esRelajado() {
+    return this.avion.alturaCabina > 4 && this.cantidadAsientosLibres() < 100;
   }
 };
