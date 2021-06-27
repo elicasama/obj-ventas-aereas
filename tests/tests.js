@@ -5,6 +5,7 @@ const Avion = require("../src/Avion");
 const VueloDePasajeros = require("../src/VueloDePasajeros");
 const VueloCharter = require("../src/VueloCharter");
 const VueloDeCarga = require("../src/VueloDeCarga");
+const Estricta = require("../src/Estricta");
 
 describe("Agencia de Vuelos", () => {
   describe("Disponibilidades de asientos - antes de vender un pasaje", () => {
@@ -103,6 +104,7 @@ describe("Agencia de Vuelos", () => {
         assert.equal(true, vueloCharter.esRelajado());
       });
     });
+
     describe("Vuelo de Pasajeros (Cantidad de asientos del avion)", () => {
       it("No: si tiene muchos asientos, aunque la cabina sea grande", () => {
         const vueloDePasajeros = new VueloDePasajeros(
@@ -136,6 +138,23 @@ describe("Agencia de Vuelos", () => {
         );
 
         assert.equal(true, vueloDePasajeros.esRelajado());
+      });
+    });
+    describe("Valores de los vuelos", () => {
+      describe("Politica standar", () => {
+        it("El precio es el mismo que se declaró como precio estandar", () => {
+          const vueloDePasajeros = new VueloDePasajeros(
+            "23-03",
+            new Avion(200, 8, 1000),
+            "Buenos Aires",
+            "Brasil",
+            600,
+            new Estricta()
+          );
+
+       
+          assert.equal(600, vueloDePasajeros.precioDelVuelo());
+        });
       });
     });
   });
