@@ -6,6 +6,9 @@ const VueloDePasajeros = require("../src/VueloDePasajeros");
 const VueloCharter = require("../src/VueloCharter");
 const VueloDeCarga = require("../src/VueloDeCarga");
 const Estricta = require("../src/Estricta");
+const Segura = require("../src/Segura");
+const Pandemia = require("../src/Pandemia");
+const Remate = require("../src/Remate");
 
 describe("Agencia de Vuelos", () => {
   describe("Disponibilidades de asientos - antes de vender un pasaje", () => {
@@ -140,21 +143,97 @@ describe("Agencia de Vuelos", () => {
         assert.equal(true, vueloDePasajeros.esRelajado());
       });
     });
-    describe("Valores de los vuelos", () => {
-      describe("Politica standar", () => {
-        it("El precio es el mismo que se declaró como precio estandar", () => {
-          const vueloDePasajeros = new VueloDePasajeros(
-            "23-03",
-            new Avion(200, 8, 1000),
-            "Buenos Aires",
-            "Brasil",
-            600,
-            new Estricta()
-          );
+  });
+  describe("Valores de los vuelos - varía según la política", () => {
+    describe("Politica standar", () => {
+      it("El precio es el mismo que se declaró como precio estandar", () => {
+        const vueloDePasajeros = new VueloDePasajeros(
+          "23-03",
+          new Avion(200, 8, 1000),
+          "Buenos Aires",
+          "Brasil",
+          600,
+          new Estricta()
+        );
 
-       
-          assert.equal(600, vueloDePasajeros.precioDelVuelo());
-        });
+        assert.equal(600, vueloDePasajeros.precioDelVuelo());
+      });
+      
+    });
+    describe("Politica Remate", () => {
+      it("Si el vuelo tiene más de 30 asientos libres entonces corresponde el 25% del precio estándar", () => {
+        const vueloDePasajeros = new VueloDePasajeros(
+          "23-03",
+          new Avion(200, 8, 1000), 
+          "Buenos Aires",
+          "Brasil",
+          600,                  // 150 sería el 25% del precio
+          new Remate()
+
+        );
+
+        assert.equal(150, vueloDePasajeros.precioDelVuelo());
+      });
+      it("Si el vuelo tiene menos de 30 asientos libres entonces corresponde el 50% del precio estandar", () => {
+        const vueloDePasajeros = new VueloDePasajeros(
+          "23-03",
+          new Avion(20, 8, 1000), 
+          "Buenos Aires",
+          "Brasil",
+          600,                  // 300 sería el 50% del precio
+          new Remate()
+
+        );
+
+        assert.equal(300, vueloDePasajeros.precioDelVuelo());
+      });
+      
+    });
+    it("Faltan los otros criterios", () => {});
+  });
+
+  describe("Venta según criterio", () => {
+    describe("Segura", () => {
+      it("Se puede vender si hay más de 3 asientos libres", () => {
+        const vueloDePasajeros = new VueloDePasajeros(
+          "23-03",
+          new Avion(200, 8, 1000),
+          "Buenos Aires",
+          "Brasil",
+          600,
+          new Estricta(),
+          new Segura()
+        );
+
+        assert.equal(true, vueloDePasajeros.sePuedeVenderUnPasaje());
+      });
+      it("No se puede vender si hay menos de 3 asientos libres", () => {
+        const vueloDePasajeros = new VueloDePasajeros(
+          "23-03",
+          new Avion(2, 8, 1000),
+          "Buenos Aires",
+          "Brasil",
+          600,
+          new Estricta(),
+          new Segura()
+        );
+
+        assert.equal(false, vueloDePasajeros.sePuedeVenderUnPasaje());
+      });
+    });
+    describe("Pandemia", () => {
+      it("No se pueden vender vuelos", () => {
+        const vueloDePasajeros = new VueloDePasajeros(
+          "23-03",
+          new Avion(200, 8, 1000),
+          "Buenos Aires",
+          "Brasil",
+          600,
+          new Estricta(),
+          new Pandemia()
+        );
+
+        assert.equal(false, vueloDePasajeros.sePuedeVenderUnPasaje());
       });
     });
   });
