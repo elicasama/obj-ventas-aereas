@@ -13,6 +13,7 @@ const Configuracion = require("../src/Configuracion");
 const LaxaFija = require("../src/LaxaFija");
 const { Console } = require("console");
 const LaxaPorcentual = require("../src/LaxaPorcentual");
+const VentaAnticipada = require("../src/VentaAnticipada");
 
 describe("Agencia de Vuelos", () => {
   beforeEach(() => {
@@ -193,7 +194,36 @@ describe("Agencia de Vuelos", () => {
         assert.equal(300, vueloDePasajeros.precioDelVuelo());
       });
     });
-    it("Faltan los otros criterios", () => {});
+    describe.only("Politica Venta Anticipada", () => {
+      let vueloDePasajeros;
+
+      beforeEach(() => {
+        vueloDePasajeros = new VueloDePasajeros(
+          "23-03",
+          new Avion(100, 8, 1000),
+          "Buenos Aires",
+          "Brasil",
+          600,
+          new VentaAnticipada()
+        );
+      });
+
+      it("Si el vuelo tiene menos de 40 pasajes vendidos, 30% del precio estándar", () => {
+        vueloDePasajeros.pasajesVendidos = 30;
+
+        assert.equal(180, vueloDePasajeros.precioDelVuelo()); // 180 es el 60% de 600
+      });
+      it("Si el vuelo tiene entre 40 y 79 pasajes vendidos, 60%, del precio estándar", () => {
+        vueloDePasajeros.pasajesVendidos = 60;
+
+        assert.equal(360, vueloDePasajeros.precioDelVuelo());  // 360 es el 60% de 600
+      });
+      it("Caso contrario (más de 79), corresponde el precio estándar completo", () => {
+        vueloDePasajeros.pasajesVendidos = 80;
+
+        assert.equal(600, vueloDePasajeros.precioDelVuelo()); 
+      });
+    });
   });
 
   describe("Venta según criterio", () => {
