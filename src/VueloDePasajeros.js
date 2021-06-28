@@ -6,6 +6,6 @@ module.exports = class VueloDePasajeros extends Vuelo {
   }
 
   cantidadAsientosLibres() {
-    return this.avion.cantidadDeAsientos;
+    return this.avion.cantidadDeAsientos - this.cantidadAsientosVendidos();
   }
 };
