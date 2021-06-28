@@ -4,6 +4,4 @@ module.exports = class Avion {
     this.alturaCabina = alturaCabina;
     this.peso = peso;
   }
-
-  
 };

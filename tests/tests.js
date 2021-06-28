@@ -9,6 +9,7 @@ const Estricta = require("../src/Estricta");
 const Segura = require("../src/Segura");
 const Pandemia = require("../src/Pandemia");
 const Remate = require("../src/Remate");
+const Configuracion = require("../src/Configuracion")
 
 describe("Agencia de Vuelos", () => {
   describe("Disponibilidades de asientos - antes de vender un pasaje", () => {
@@ -202,7 +203,6 @@ describe("Agencia de Vuelos", () => {
           "Brasil",
           600,
           new Estricta(),
-          new Segura()
         );
 
         assert.equal(true, vueloDePasajeros.sePuedeVenderUnPasaje());
@@ -215,7 +215,6 @@ describe("Agencia de Vuelos", () => {
           "Brasil",
           600,
           new Estricta(),
-          new Segura()
         );
 
         assert.equal(false, vueloDePasajeros.sePuedeVenderUnPasaje());
@@ -223,6 +222,7 @@ describe("Agencia de Vuelos", () => {
     });
     describe("Pandemia", () => {
       it("No se pueden vender vuelos", () => {
+        Configuracion.criterio = new Pandemia()
         const vueloDePasajeros = new VueloDePasajeros(
           "23-03",
           new Avion(200, 8, 1000),
@@ -230,7 +230,6 @@ describe("Agencia de Vuelos", () => {
           "Brasil",
           600,
           new Estricta(),
-          new Pandemia()
         );
 
         assert.equal(false, vueloDePasajeros.sePuedeVenderUnPasaje());

@@ -1,20 +1,13 @@
+const configuracion = require("./Configuracion");
+
 module.exports = class Vuelo {
-  constructor(
-    fecha,
-    avion,
-    origen,
-    destino,
-    precioEstandar,
-    politica,
-    criterio
-  ) {
+  constructor(fecha, avion, origen, destino, precioEstandar, politica) {
     this.fecha = fecha;
     this.avion = avion;
     this.origen = origen;
     this.destino = destino;
     this.precioEstandar = precioEstandar;
     this.politica = politica;
-    this.criterio = criterio;
     this.pasajesVendidos = 0;
   }
 
@@ -31,6 +24,6 @@ module.exports = class Vuelo {
   }
 
   sePuedeVenderUnPasaje() {
-    return this.criterio.analizarPosibleVenta(this);
+    return configuracion.criterio.puedoVenderUnPasaje(this);
   }
 };
