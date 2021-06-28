@@ -4,6 +4,7 @@
   "description": "UNIHUR-objetos2",
   "main": "index.js",
   "scripts": {
+    "start": "mocha tests",
     "test": "mocha tests"
   },
   "repository": {

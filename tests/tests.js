@@ -9,9 +9,16 @@ const Estricta = require("../src/Estricta");
 const Segura = require("../src/Segura");
 const Pandemia = require("../src/Pandemia");
 const Remate = require("../src/Remate");
-const Configuracion = require("../src/Configuracion")
+const Configuracion = require("../src/Configuracion");
+const LaxaFija = require("../src/LaxaFija");
+const { Console } = require("console");
+const LaxaPorcentual = require("../src/LaxaPorcentual");
 
 describe("Agencia de Vuelos", () => {
+  beforeEach(() => {
+    Configuracion.criterio = new Segura();
+  });
+
   describe("Disponibilidades de asientos - antes de vender un pasaje", () => {
     it("Vuelo de carga, siempre tiene 10 asientos disponibles", () => {
       const vueloDeCarga = new VueloDeCarga(
@@ -159,18 +166,16 @@ describe("Agencia de Vuelos", () => {
 
         assert.equal(600, vueloDePasajeros.precioDelVuelo());
       });
-      
     });
     describe("Politica Remate", () => {
       it("Si el vuelo tiene más de 30 asientos libres entonces corresponde el 25% del precio estándar", () => {
         const vueloDePasajeros = new VueloDePasajeros(
           "23-03",
-          new Avion(200, 8, 1000), 
+          new Avion(200, 8, 1000),
           "Buenos Aires",
           "Brasil",
-          600,                  // 150 sería el 25% del precio
+          600, // 150 sería el 25% del precio
           new Remate()
-
         );
 
         assert.equal(150, vueloDePasajeros.precioDelVuelo());
@@ -178,17 +183,15 @@ describe("Agencia de Vuelos", () => {
       it("Si el vuelo tiene menos de 30 asientos libres entonces corresponde el 50% del precio estandar", () => {
         const vueloDePasajeros = new VueloDePasajeros(
           "23-03",
-          new Avion(20, 8, 1000), 
+          new Avion(20, 8, 1000),
           "Buenos Aires",
           "Brasil",
-          600,                  // 300 sería el 50% del precio
+          600, // 300 sería el 50% del precio
           new Remate()
-
         );
 
         assert.equal(300, vueloDePasajeros.precioDelVuelo());
       });
-      
     });
     it("Faltan los otros criterios", () => {});
   });
@@ -202,7 +205,7 @@ describe("Agencia de Vuelos", () => {
           "Buenos Aires",
           "Brasil",
           600,
-          new Estricta(),
+          new Estricta()
         );
 
         assert.equal(true, vueloDePasajeros.sePuedeVenderUnPasaje());
@@ -214,22 +217,83 @@ describe("Agencia de Vuelos", () => {
           "Buenos Aires",
           "Brasil",
           600,
-          new Estricta(),
+          new Estricta()
         );
 
         assert.equal(false, vueloDePasajeros.sePuedeVenderUnPasaje());
       });
     });
+    describe("Laxa Simple - Se puede vender en cada vuelo hasta 10 pasajes más de los asientos disponibles.", () => {
+      it("Puedo vender si se vendieron menos de capacidad del avión + 10", () => {
+        Configuracion.criterio = new LaxaFija();
+        const vueloDePasajeros = new VueloDePasajeros(
+          "23-03",
+          new Avion(100, 8, 1000),
+          "Buenos Aires",
+          "Brasil",
+          600,
+          new Estricta()
+        );
+
+        vueloDePasajeros.pasajesVendidos = 12; // Tenía 100 disponible + 10 y vendí 12
+
+        assert.equal(true, vueloDePasajeros.sePuedeVenderUnPasaje());
+      });
+
+      it("No puedo vender si superé la capacidad del avión + 10 ", () => {
+        Configuracion.criterio = new LaxaFija();
+        const vueloDePasajeros = new VueloDePasajeros(
+          "23-03",
+          new Avion(1, 8, 1000),
+          "Buenos Aires",
+          "Brasil",
+          600,
+          new Estricta()
+        );
+
+        vueloDePasajeros.pasajesVendidos = 11; // Tenía 1 disponible + 10 y vendí 11
+
+        assert.equal(false, vueloDePasajeros.sePuedeVenderUnPasaje());
+      });
+    });
+
+    describe("Laxa Porcentual - Se puede vender en cada vuelo hasta 10% más de los asientos disponibles.", () => {
+      let vueloDePasajeros;
+
+      beforeEach(() => {
+        Configuracion.criterio = new LaxaPorcentual();
+        vueloDePasajeros = new VueloDePasajeros(
+          "23-03",
+          new Avion(100, 8, 1000),
+          "Buenos Aires",
+          "Brasil",
+          600,
+          new Estricta()
+        );
+      });
+
+      it("Puedo vender si no se superó el 10% de la capacidad total", () => {
+        vueloDePasajeros.pasajesVendidos = 100; // quedan 10 para vender
+
+        assert.equal(true, vueloDePasajeros.sePuedeVenderUnPasaje());
+      });
+
+      it("No puedo vender si se superó el 10% de la capacidad total", () => {
+        vueloDePasajeros.pasajesVendidos = 111; // quedan 0
+        assert.equal(false, vueloDePasajeros.sePuedeVenderUnPasaje());
+      });
+    });
+
     describe("Pandemia", () => {
       it("No se pueden vender vuelos", () => {
-        Configuracion.criterio = new Pandemia()
+        Configuracion.criterio = new Pandemia();
         const vueloDePasajeros = new VueloDePasajeros(
           "23-03",
           new Avion(200, 8, 1000),
           "Buenos Aires",
           "Brasil",
           600,
-          new Estricta(),
+          new Estricta()
         );
 
         assert.equal(false, vueloDePasajeros.sePuedeVenderUnPasaje());

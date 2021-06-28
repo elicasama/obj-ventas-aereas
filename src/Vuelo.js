@@ -19,9 +19,9 @@ module.exports = class Vuelo {
     return this.politica.calcularPrecio(this);
   }
 
-  venderPasaje() {
-    return (this.pasajesVendidos = this.pasajesVendidos + 1);
-  }
+  // venderPasaje() {
+  //   return (this.pasajesVendidos = this.pasajesVendidos + 1);
+  // }
 
   sePuedeVenderUnPasaje() {
     return configuracion.criterio.puedoVenderUnPasaje(this);
