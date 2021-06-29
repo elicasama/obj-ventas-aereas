@@ -119,7 +119,7 @@ describe("Agencia de Vuelos", () => {
     });
 
     describe("Vuelo de Pasajeros (Cantidad de asientos del avion)", () => {
-      it("No: si tiene muchos asientos, aunque la cabina sea grande", () => {
+      it("No: si tiene muchos más de 100 asientos, aunque la cabina sea grande", () => {
         const vueloDePasajeros = new VueloDePasajeros(
           "23-03",
           new Avion(200, 8, 1000),
@@ -130,7 +130,7 @@ describe("Agencia de Vuelos", () => {
 
         assert.equal(false, vueloDePasajeros.esRelajado());
       });
-      it("No: si la cabina es chica aunque tenga pocos asientos", () => {
+      it("No: si la cabina es chica aunque tenga menos de 100 asientos", () => {
         const vueloDePasajeros = new VueloDePasajeros(
           "23-03",
           new Avion(90, 3, 1000),
@@ -141,7 +141,7 @@ describe("Agencia de Vuelos", () => {
 
         assert.equal(false, vueloDePasajeros.esRelajado());
       });
-      it("Sí: cuando cumple las condiciones", () => {
+      it("Sí: cuando cumple las condiciones (menos de 100 asientos y cabina grande)", () => {
         const vueloDePasajeros = new VueloDePasajeros(
           "23-03",
           new Avion(90, 5, 1000),
@@ -208,21 +208,45 @@ describe("Agencia de Vuelos", () => {
           600,
           new VentaAnticipada()
         );
+        vueloDePasajeros.pasajesVendidos = [];
       });
 
       it("Si el vuelo tiene menos de 40 pasajes vendidos, 30% del precio estándar", () => {
-        vueloDePasajeros.pasajesVendidos = 30;
+        const pasaje = new Pasaje(
+          "22-03-2021",
+          26581333,
+          vueloDePasajeros.precioDelVuelo()
+        );
 
+        for (i = 0; i < 30; i++) {
+          vueloDePasajeros.venderPasaje(pasaje);
+        }
         assert.equal(180, vueloDePasajeros.precioDelVuelo()); // 180 es el 60% de 600
       });
       it("Si el vuelo tiene entre 40 y 79 pasajes vendidos, 60%, del precio estándar", () => {
-        vueloDePasajeros.pasajesVendidos = 60;
+        const pasaje = new Pasaje(
+          "22-03-2021",
+          26581333,
+          vueloDePasajeros.precioDelVuelo()
+        );
 
+        for (i = 0; i < 60; i++) {
+          vueloDePasajeros.venderPasaje(pasaje);
+        }
+        
         assert.equal(360, vueloDePasajeros.precioDelVuelo()); // 360 es el 60% de 600
       });
       it("Caso contrario (más de 79), corresponde el precio estándar completo", () => {
-        vueloDePasajeros.pasajesVendidos = 80;
+        const pasaje = new Pasaje(
+          "22-03-2021",
+          26581333,
+          vueloDePasajeros.precioDelVuelo()
+        );
 
+        for (i = 0; i < 80; i++) {
+          vueloDePasajeros.venderPasaje(pasaje);
+        }
+        
         assert.equal(600, vueloDePasajeros.precioDelVuelo());
       });
     });

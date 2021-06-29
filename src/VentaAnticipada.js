@@ -5,9 +5,12 @@
 
 module.exports = class VentaAnticipada {
   calcularPrecio(vuelo) {
-    if (vuelo.pasajesVendidos < 40) return vuelo.precioEstandar * 0.3;
-    return 40 <= vuelo.pasajesVendidos && vuelo.pasajesVendidos <= 79
+    if (vuelo.cantidadAsientosVendidos() < 40) return vuelo.precioEstandar * 0.3;
+    return 40 <= vuelo.cantidadAsientosVendidos() && vuelo.cantidadAsientosVendidos() <= 79
       ? vuelo.precioEstandar * 0.6
       : vuelo.precioEstandar;
   }
 };
+
+
+
