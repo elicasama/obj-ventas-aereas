@@ -26,6 +26,18 @@ module.exports = class Vuelo {
     return this.politica.calcularPrecio(this);
   }
 
+  pesoTotalDelVuelo() {
+    return this.avion.peso + this.pesoDeLosPasajeros() + this.pesoDeLaCarga();
+  }
+
+  pesoDeLosPasajeros() {
+    return configuracion.pesoStandarIATA * this.cantidadAsientosVendidos();
+  }
+
+  pesoDeLaCarga() {
+    return this.pesoDeCarga();
+  }
+
   venderPasaje(fecha, dni) {
     if (!this.sePuedeVenderUnPasaje())
       throw new errores.NoSePuedeVenderElPasaje();

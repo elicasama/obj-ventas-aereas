@@ -6,6 +6,10 @@ module.exports = class VueloCharter extends Vuelo {
   }
 
   cantidadAsientosLibres() {
-    return this.avion.cantidadDeAsientos - 25 - this.cantidadAsientosVendidos()
+    return this.avion.cantidadDeAsientos - 25 - this.cantidadAsientosVendidos();
+  }
+
+  pesoDeCarga() {
+    return 5000;
   }
 };

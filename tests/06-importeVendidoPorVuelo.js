@@ -24,7 +24,7 @@ describe("Importe vendido para un vuelo - según politica", () => {
   });
 
   describe("Estricta ", () => {
-    it("Si se venden 2 vuelos de 600 sería 1200", () => {
+    it("Si se venden 2 pasajes de 600 sería 1200", () => {
       for (i = 0; i < 2; i++) {
         vueloDePasajeros.venderPasaje("22-03-2021", 26581333); // 2 pasajes a 600
       }
