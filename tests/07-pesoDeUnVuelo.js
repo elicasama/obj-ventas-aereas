@@ -4,8 +4,6 @@ const VueloDePasajeros = require("../src/VueloDePasajeros");
 const Configuracion = require("../src/Configuracion");
 const Segura = require("../src/Segura");
 const Estricta = require("../src/Estricta");
-const Remate = require("../src/Remate");
-const VentaAnticipada = require("../src/VentaAnticipada");
 const VueloDeCarga = require("../src/VueloDeCarga");
 const VueloCharter = require("../src/VueloCharter");
 
@@ -29,7 +27,7 @@ describe("Peso del Vuelo", () => {
       for (i = 0; i < 2; i++) {
         vueloDePasajeros.venderPasaje("22-03-2021", 26581333);
       }
-      // peso del avion                       = 1000
+      // peso del avión                       = 1000
       // peso de los pasajeros (2 * 70)       = 140
       // peso del equipaje permitido (2 * 20) = 40
 
@@ -53,7 +51,7 @@ describe("Peso del Vuelo", () => {
       for (i = 0; i < 2; i++) {
         vueloDeCarga.venderPasaje("22-03-2021", 26581333);
       }
-      // peso del avion                       = 3000
+      // peso del avión                       = 3000
       // peso de los pasajeros (2 * 70)       = 140
       // peso de la carga                     = 1000
       // peso de equipamiento fijo            = 700
@@ -77,7 +75,7 @@ describe("Peso del Vuelo", () => {
       for (i = 0; i < 3; i++) {
         vueloCharter.venderPasaje("22-03-2021", 26581333);
       }
-      // peso del avion                       = 10000
+      // peso del avión                       = 10000
       // peso de los pasajeros (2 * 70)       =   210
       // peso fijo                            =  5000
       

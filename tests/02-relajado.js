@@ -1,7 +1,6 @@
 var assert = require("assert");
 const Avion = require("../src/Avion");
 const errores = require("../src/errores");
-const VueloDePasajeros = require("../src/VueloDePasajeros");
 const VueloCharter = require("../src/VueloCharter");
 const VueloDeCarga = require("../src/VueloDeCarga");
 
