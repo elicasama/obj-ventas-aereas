@@ -16,26 +16,27 @@ describe("Es Relajado?", () => {
 
     assert.equal(false, vueloDeCarga.esRelajado());
   });
-});
-it("No: con cabina > 4 metros pero más de 100 asientos disponibles", () => {
-  const vueloCharter = new VueloCharter(
-    "23-03",
-    new Avion(300, 13, 1000), //--> asientos disponibles 205
-    "Buenos Aires",
-    "Brasil",
-    600
-  );
 
-  assert.equal(false, vueloCharter.esRelajado());
-});
-it("Sí: con cabina > 4 metros y  menos de 100 asientos disponibles", () => {
-  const vueloCharter = new VueloCharter(
-    "23-03",
-    new Avion(30, 13, 1000), //--> asientos disponibles 5
-    "Buenos Aires",
-    "Brasil",
-    600
-  );
+  it("No: con cabina > 4 metros pero más de 100 asientos disponibles", () => {
+    const vueloCharter = new VueloCharter(
+      "23-03",
+      new Avion(300, 13, 1000), //--> asientos disponibles 205
+      "Buenos Aires",
+      "Brasil",
+      600
+    );
 
-  assert.equal(true, vueloCharter.esRelajado());
+    assert.equal(false, vueloCharter.esRelajado());
+  });
+  it("Sí: con cabina > 4 metros y  menos de 100 asientos disponibles", () => {
+    const vueloCharter = new VueloCharter(
+      "23-03",
+      new Avion(30, 13, 1000), //--> asientos disponibles 5
+      "Buenos Aires",
+      "Brasil",
+      600
+    );
+
+    assert.equal(true, vueloCharter.esRelajado());
+  });
 });

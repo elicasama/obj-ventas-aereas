@@ -48,17 +48,17 @@ describe("Importe vendido para un vuelo - según politica", () => {
       vueloDePasajeros.pasajesVendidos = [];
     });
 
-    it("Si el vuelo tiene más de 30 asientos libres entonces corresponde el 25% del precio estándar", () => {
+    it("Si tiene más de 30 asientos 25% del precio estándar por cantidad de pasajes", () => {
       for (i = 0; i < 2; i++) {
         vueloDePasajeros.venderPasaje("22-03-2021", 26581333);
       }
 
       assert.equal(300, vueloDePasajeros.importeVendido());
     });
-    it("Si el vuelo tiene menos de 30 asientos libres entonces corresponde el 50% del precio estandar", () => {
+    it("Si tiene menos de 30 asientos libres entonces corresponde el 50% del precio estandar", () => {
       const vueloDePasajeros = new VueloDePasajeros(
         "23-03",
-        new Avion(20, 8, 1000),
+        new Avion(20, 8, 1000),  // el avión de por sí tiene menos de 30 asientos
         "Buenos Aires",
         "Brasil",
         600, // 300 sería el 50% del precio
