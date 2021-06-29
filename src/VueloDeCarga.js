@@ -10,7 +10,7 @@ module.exports = class VueloDeCarga extends Vuelo {
     return 10 - this.cantidadAsientosVendidos();
   }
 
-  pesoDeCarga() {
+  pesoDeLaCarga() {
     return this.carga + 700;
   }
 

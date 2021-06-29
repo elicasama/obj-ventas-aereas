@@ -9,7 +9,7 @@ module.exports = class VueloCharter extends Vuelo {
     return this.avion.cantidadDeAsientos - 25 - this.cantidadAsientosVendidos();
   }
 
-  pesoDeCarga() {
+  pesoDeLaCarga() {
     return 5000;
   }
 };

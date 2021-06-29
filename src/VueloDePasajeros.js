@@ -10,7 +10,7 @@ module.exports = class VueloDePasajeros extends Vuelo {
     return this.avion.cantidadDeAsientos - this.cantidadAsientosVendidos();
   }
 
-  pesoDeCarga() {
+  pesoDeLaCarga() {
     return (
       configuracion.pesoDeEquipajePorPasajero * this.cantidadAsientosVendidos()
     );

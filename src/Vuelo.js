@@ -34,10 +34,6 @@ module.exports = class Vuelo {
     return configuracion.pesoStandarIATA * this.cantidadAsientosVendidos();
   }
 
-  pesoDeLaCarga() {
-    return this.pesoDeCarga();
-  }
-
   venderPasaje(fecha, dni) {
     if (!this.sePuedeVenderUnPasaje())
       throw new errores.NoSePuedeVenderElPasaje();
@@ -51,4 +47,6 @@ module.exports = class Vuelo {
   importeVendido() {
     return _.sumBy(this.pasajesVendidos, (pasaje) => pasaje.importeAbonado);
   }
+
+
 };
