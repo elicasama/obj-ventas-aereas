@@ -448,11 +448,108 @@ describe("Agencia de Vuelos", () => {
           26581333,
           vueloDePasajeros.precioDelVuelo()
         );
+
         for (i = 0; i < 2; i++) {
-          vueloDePasajeros.venderPasaje(pasaje); // 100 + 10% = 110 originales - Vendí 110 No quedan para vender
+          vueloDePasajeros.venderPasaje(pasaje); // 2 pasajes a 600
         }
 
         assert.equal(1200, vueloDePasajeros.importeVendido());
+      });
+    });
+
+    describe("Politica Remate", () => {
+      it("Si el vuelo tiene más de 30 asientos libres entonces corresponde el 25% del precio estándar", () => {
+        vueloDePasajeros = new VueloDePasajeros(
+          "23-03",
+          new Avion(100, 8, 1000),
+          "Buenos Aires",
+          "Brasil",
+          600,
+          new Remate()
+        );
+
+        vueloDePasajeros.pasajesVendidos = [];
+
+        const pasaje = new Pasaje(
+          "22-03-2021",
+          26581333,
+          vueloDePasajeros.precioDelVuelo() // 150 cada pasaje
+        );
+        for (i = 0; i < 2; i++) {
+          vueloDePasajeros.venderPasaje(pasaje);
+        }
+
+        assert.equal(300, vueloDePasajeros.importeVendido());
+      });
+      it("Si el vuelo tiene menos de 30 asientos libres entonces corresponde el 50% del precio estandar", () => {
+        const vueloDePasajeros = new VueloDePasajeros(
+          "23-03",
+          new Avion(20, 8, 1000),
+          "Buenos Aires",
+          "Brasil",
+          600, // 300 sería el 50% del precio
+          new Remate()
+        );
+
+        const pasaje = new Pasaje(
+          "22-03-2021",
+          26581333,
+          vueloDePasajeros.precioDelVuelo() // 300 cada pasaje
+        );
+
+        for (i = 0; i < 2; i++) {
+          vueloDePasajeros.venderPasaje(pasaje); // 2 pasajes a 300
+        }
+
+        assert.equal(600, vueloDePasajeros.importeVendido());
+      });
+    });
+
+    describe("Politica Venta Anticipada", () => {
+      let vueloDePasajeros;
+
+      beforeEach(() => {
+        vueloDePasajeros = new VueloDePasajeros(
+          "23-03",
+          new Avion(100, 8, 1000),
+          "Buenos Aires",
+          "Brasil",
+          600,
+          new VentaAnticipada()
+        );
+        vueloDePasajeros.pasajesVendidos = [];
+      });
+
+      it("Si el vuelo tiene menos de 40 pasajes vendidos, 30% del precio estándar", () => {
+        const pasaje = new Pasaje(
+          "22-03-2021",
+          26581333,
+          vueloDePasajeros.precioDelVuelo() // 180 cada vuelo
+        );
+
+        for (i = 0; i < 30; i++) {
+          vueloDePasajeros.venderPasaje(pasaje);
+        }
+        
+        assert.equal(5400, vueloDePasajeros.importeVendido()); 
+      });
+
+      it.only("Si el vuelo tiene más de 80 pasajes se suman todos los montos a medida que se vendieron", () => {
+        // de 0 a 39 =  180 cada vuelo  =  180 * 40 = 7200
+        // de 40 a 79 = 360 cada vuelo = 360 * 40 =  14400
+        // de 80 a 81 = 600 cada vuelo = 600 * 2 = 1200
+
+        for (i = 0; i < 81; i++) {
+          const pasaje = new Pasaje(
+            "22-03-2021",
+            26581333,
+            vueloDePasajeros.precioDelVuelo() 
+          );
+
+          vueloDePasajeros.venderPasaje(pasaje);
+
+        }
+        assert.equal(22200, vueloDePasajeros.importeVendido()); 
       });
     });
   });

@@ -1,8 +1,7 @@
 var _ = require("lodash");
 const configuracion = require("./Configuracion");
 const errores = require("./errores");
-
-
+const Pasaje = require("../src/Pasaje");
 
 module.exports = class Vuelo {
   constructor(fecha, avion, origen, destino, precioEstandar, politica) {
