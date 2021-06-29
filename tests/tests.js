@@ -212,39 +212,21 @@ describe("Agencia de Vuelos", () => {
       });
 
       it("Si el vuelo tiene menos de 40 pasajes vendidos, 30% del precio estándar", () => {
-        const pasaje = new Pasaje(
-          "22-03-2021",
-          26581333,
-          vueloDePasajeros.precioDelVuelo()
-        );
-
         for (i = 0; i < 30; i++) {
-          vueloDePasajeros.venderPasaje(pasaje);
+          vueloDePasajeros.venderPasaje("22-03-2021", 26581333);
         }
         assert.equal(180, vueloDePasajeros.precioDelVuelo()); // 180 es el 60% de 600
       });
       it("Si el vuelo tiene entre 40 y 79 pasajes vendidos, 60%, del precio estándar", () => {
-        const pasaje = new Pasaje(
-          "22-03-2021",
-          26581333,
-          vueloDePasajeros.precioDelVuelo()
-        );
-
         for (i = 0; i < 60; i++) {
-          vueloDePasajeros.venderPasaje(pasaje);
+          vueloDePasajeros.venderPasaje("22-03-2021", 26581333);
         }
 
         assert.equal(360, vueloDePasajeros.precioDelVuelo()); // 360 es el 60% de 600
       });
       it("Caso contrario (más de 79), corresponde el precio estándar completo", () => {
-        const pasaje = new Pasaje(
-          "22-03-2021",
-          26581333,
-          vueloDePasajeros.precioDelVuelo()
-        );
-
         for (i = 0; i < 80; i++) {
-          vueloDePasajeros.venderPasaje(pasaje);
+          vueloDePasajeros.venderPasaje("22-03-2021", 26581333);
         }
 
         assert.equal(600, vueloDePasajeros.precioDelVuelo());
@@ -295,30 +277,20 @@ describe("Agencia de Vuelos", () => {
         vueloDePasajeros.pasajesVendidos = [];
       });
       it("Puedo vender si se vendieron menos de capacidad del avión + 10", () => {
-        const pasaje = new Pasaje(
-          "22-03-2021",
-          26581333,
-          vueloDePasajeros.precioDelVuelo()
-        );
         for (i = 0; i < 9; i++) {
-          vueloDePasajeros.venderPasaje(pasaje); // 100 + 10% = 110 originales - Vendí 10 quedan 100 para vender
+          vueloDePasajeros.venderPasaje("22-03-2021", 26581333);; // 100 + 10% = 110 originales - Vendí 10 quedan 100 para vender
         }
 
         assert.equal(true, vueloDePasajeros.sePuedeVenderUnPasaje());
       });
 
       it("No puedo vender si superé la capacidad del avión + 10 ", () => {
-        const pasaje = new Pasaje(
-          "22-03-2021",
-          26581333,
-          vueloDePasajeros.precioDelVuelo()
-        );
         for (i = 0; i < 110; i++) {
-          vueloDePasajeros.venderPasaje(pasaje); // 100 + 10% = 110 originales - Vendí 110 No podría vender
+          vueloDePasajeros.venderPasaje("22-03-2021", 26581333); // 100 + 10% = 110 originales - Vendí 110 No podría vender
         }
 
         assert.throws(() => {
-          vueloDePasajeros.venderPasaje(pasaje);
+          vueloDePasajeros.venderPasaje("22-03-2021", 26581333);;
         }, errores.NoSePuedeVenderElPasaje);
       });
     });
@@ -340,31 +312,20 @@ describe("Agencia de Vuelos", () => {
       });
 
       it("Puedo vender si no se superó el 10% de la capacidad total", () => {
-        const pasaje = new Pasaje(
-          "22-03-2021",
-          26581333,
-          vueloDePasajeros.precioDelVuelo()
-        );
         for (i = 0; i < 10; i++) {
-          vueloDePasajeros.venderPasaje(pasaje); // 100 + 10% = 110 originales - Vendí 10 quedan 100 para vender
+          vueloDePasajeros.venderPasaje("22-03-2021", 26581333); // 100 + 10% = 110 originales - Vendí 10 quedan 100 para vender
         }
 
         assert.equal(true, vueloDePasajeros.sePuedeVenderUnPasaje());
       });
 
       it("No puedo vender si se superó el 10% de la capacidad total", () => {
-        const pasaje = new Pasaje(
-          "22-03-2021",
-          26581333,
-          vueloDePasajeros.precioDelVuelo()
-        );
-
         for (i = 0; i < 111; i++) {
-          vueloDePasajeros.venderPasaje(pasaje); // 100 + 10% = 110 originales - Vendí 110 No quedan para vender
+          vueloDePasajeros.venderPasaje("22-03-2021", 26581333);; // 100 + 10% = 110 originales - Vendí 110 No quedan para vender
         }
 
         assert.throws(() => {
-          vueloDePasajeros.venderPasaje(pasaje);
+          vueloDePasajeros.venderPasaje("22-03-2021", 26581333);
         }, errores.NoSePuedeVenderElPasaje);
       });
     });
@@ -380,14 +341,9 @@ describe("Agencia de Vuelos", () => {
           600,
           new Estricta()
         );
-        const pasaje = new Pasaje(
-          "22-03-2021",
-          26581333,
-          vueloDePasajeros.precioDelVuelo()
-        );
-
+  
         assert.throws(() => {
-          vueloDePasajeros.venderPasaje(pasaje);
+          vueloDePasajeros.venderPasaje("22-03-2021", 26581333);
         }, errores.NoSePuedeVenderElPasaje);
       });
     });
@@ -407,26 +363,16 @@ describe("Agencia de Vuelos", () => {
     });
     it("Vuelo en pandemia - No podría vender", () => {
       Configuracion.criterio = new Pandemia();
-      const pasaje = new Pasaje(
-        "22-03-2021",
-        26581333,
-        vueloDePasajeros.precioDelVuelo()
-      );
+
       assert.throws(() => {
-        vueloDePasajeros.venderPasaje(pasaje);
+        vueloDePasajeros.venderPasaje("22-03-2021", 26581333);
       }, errores.NoSePuedeVenderElPasaje);
     });
 
     it("Sin Restricciones - puede vender", () => {
       Configuracion.criterio = new Segura(); // al ser una politica segura puede vender el pasaje, hay más de 3 libres
 
-      const pasaje = new Pasaje(
-        "22-03-2021",
-        26581333,
-        vueloDePasajeros.precioDelVuelo()
-      );
-
-      vueloDePasajeros.venderPasaje(pasaje);
+      vueloDePasajeros.venderPasaje("22-03-2021", 26581333);
       assert.equal(1, vueloDePasajeros.pasajesVendidos.length);
     });
   });
@@ -443,14 +389,8 @@ describe("Agencia de Vuelos", () => {
         );
         vueloDePasajeros.pasajesVendidos = [];
 
-        const pasaje = new Pasaje(
-          "22-03-2021",
-          26581333,
-          vueloDePasajeros.precioDelVuelo()
-        );
-
         for (i = 0; i < 2; i++) {
-          vueloDePasajeros.venderPasaje(pasaje); // 2 pasajes a 600
+          vueloDePasajeros.venderPasaje("22-03-2021", 26581333); // 2 pasajes a 600
         }
 
         assert.equal(1200, vueloDePasajeros.importeVendido());
@@ -458,25 +398,24 @@ describe("Agencia de Vuelos", () => {
     });
 
     describe("Politica Remate", () => {
+      let vueloDePasajeros;
+
+        beforeEach(() => {
+          vueloDePasajeros = new VueloDePasajeros(
+            "23-03",
+            new Avion(100, 8, 1000),
+            "Buenos Aires",
+            "Brasil",
+            600,
+            new Remate()
+          );
+          vueloDePasajeros.pasajesVendidos = [];
+        });
+        
       it("Si el vuelo tiene más de 30 asientos libres entonces corresponde el 25% del precio estándar", () => {
-        vueloDePasajeros = new VueloDePasajeros(
-          "23-03",
-          new Avion(100, 8, 1000),
-          "Buenos Aires",
-          "Brasil",
-          600,
-          new Remate()
-        );
-
-        vueloDePasajeros.pasajesVendidos = [];
-
-        const pasaje = new Pasaje(
-          "22-03-2021",
-          26581333,
-          vueloDePasajeros.precioDelVuelo() // 150 cada pasaje
-        );
+        
         for (i = 0; i < 2; i++) {
-          vueloDePasajeros.venderPasaje(pasaje);
+          vueloDePasajeros.venderPasaje("22-03-2021", 26581333);
         }
 
         assert.equal(300, vueloDePasajeros.importeVendido());
@@ -491,14 +430,8 @@ describe("Agencia de Vuelos", () => {
           new Remate()
         );
 
-        const pasaje = new Pasaje(
-          "22-03-2021",
-          26581333,
-          vueloDePasajeros.precioDelVuelo() // 300 cada pasaje
-        );
-
         for (i = 0; i < 2; i++) {
-          vueloDePasajeros.venderPasaje(pasaje); // 2 pasajes a 300
+          vueloDePasajeros.venderPasaje("22-03-2021", 26581333); // 2 pasajes a 300
         }
 
         assert.equal(600, vueloDePasajeros.importeVendido());
@@ -521,32 +454,22 @@ describe("Agencia de Vuelos", () => {
       });
 
       it("Si el vuelo tiene menos de 40 pasajes vendidos, 30% del precio estándar", () => {
-        const pasaje = new Pasaje(
-          "22-03-2021",
-          26581333,
-          vueloDePasajeros.precioDelVuelo() // 180 cada vuelo
-        );
-
+        
         for (i = 0; i < 30; i++) {
-          vueloDePasajeros.venderPasaje(pasaje);
+          vueloDePasajeros.venderPasaje("22-03-2021", 26581333);
         }
         
         assert.equal(5400, vueloDePasajeros.importeVendido()); 
       });
 
-      it.only("Si el vuelo tiene más de 80 pasajes se suman todos los montos a medida que se vendieron", () => {
+      it("Si el vuelo tiene más de 80 pasajes se suman todos los montos a medida que se vendieron", () => {
         // de 0 a 39 =  180 cada vuelo  =  180 * 40 = 7200
         // de 40 a 79 = 360 cada vuelo = 360 * 40 =  14400
         // de 80 a 81 = 600 cada vuelo = 600 * 2 = 1200
 
         for (i = 0; i < 81; i++) {
-          const pasaje = new Pasaje(
-            "22-03-2021",
-            26581333,
-            vueloDePasajeros.precioDelVuelo() 
-          );
-
-          vueloDePasajeros.venderPasaje(pasaje);
+          
+          vueloDePasajeros.venderPasaje("22-03-2021", 26581333)
 
         }
         assert.equal(22200, vueloDePasajeros.importeVendido()); 

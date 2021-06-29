@@ -26,10 +26,10 @@ module.exports = class Vuelo {
     return this.politica.calcularPrecio(this);
   }
 
-  venderPasaje(pasaje) {
+  venderPasaje(fecha, dni) {
     if (!this.sePuedeVenderUnPasaje())
       throw new errores.NoSePuedeVenderElPasaje();
-    this.pasajesVendidos.push(pasaje);
+    this.pasajesVendidos.push(new Pasaje(fecha, dni, this.precioDelVuelo()));
   }
 
   sePuedeVenderUnPasaje() {
