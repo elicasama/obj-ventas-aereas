@@ -233,7 +233,7 @@ describe("Agencia de Vuelos", () => {
         for (i = 0; i < 60; i++) {
           vueloDePasajeros.venderPasaje(pasaje);
         }
-        
+
         assert.equal(360, vueloDePasajeros.precioDelVuelo()); // 360 es el 60% de 600
       });
       it("Caso contrario (más de 79), corresponde el precio estándar completo", () => {
@@ -246,7 +246,7 @@ describe("Agencia de Vuelos", () => {
         for (i = 0; i < 80; i++) {
           vueloDePasajeros.venderPasaje(pasaje);
         }
-        
+
         assert.equal(600, vueloDePasajeros.precioDelVuelo());
       });
     });
@@ -316,8 +316,7 @@ describe("Agencia de Vuelos", () => {
         for (i = 0; i < 110; i++) {
           vueloDePasajeros.venderPasaje(pasaje); // 100 + 10% = 110 originales - Vendí 110 No podría vender
         }
-        
-                
+
         assert.throws(() => {
           vueloDePasajeros.venderPasaje(pasaje);
         }, errores.NoSePuedeVenderElPasaje);
@@ -386,7 +385,7 @@ describe("Agencia de Vuelos", () => {
           26581333,
           vueloDePasajeros.precioDelVuelo()
         );
-       
+
         assert.throws(() => {
           vueloDePasajeros.venderPasaje(pasaje);
         }, errores.NoSePuedeVenderElPasaje);
@@ -429,6 +428,32 @@ describe("Agencia de Vuelos", () => {
 
       vueloDePasajeros.venderPasaje(pasaje);
       assert.equal(1, vueloDePasajeros.pasajesVendidos.length);
+    });
+  });
+  describe("Importe vendido para un vuelo", () => {
+    describe("Estricta ", () => {
+      it("Si se venden 2 vuelos de 600 sería 1200", () => {
+        vueloDePasajeros = new VueloDePasajeros(
+          "23-03",
+          new Avion(100, 8, 1000),
+          "Buenos Aires",
+          "Brasil",
+          600,
+          new Estricta()
+        );
+        vueloDePasajeros.pasajesVendidos = [];
+
+        const pasaje = new Pasaje(
+          "22-03-2021",
+          26581333,
+          vueloDePasajeros.precioDelVuelo()
+        );
+        for (i = 0; i < 2; i++) {
+          vueloDePasajeros.venderPasaje(pasaje); // 100 + 10% = 110 originales - Vendí 110 No quedan para vender
+        }
+
+        assert.equal(1200, vueloDePasajeros.importeVendido());
+      });
     });
   });
 });

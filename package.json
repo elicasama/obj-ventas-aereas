@@ -19,5 +19,8 @@
   "homepage": "https://github.com/elicasama/Obj2-ventas-aereas#readme",
   "devDependencies": {
     "mocha": "^9.0.1"
+  },
+  "dependencies": {
+    "lodash": "^4.17.21"
   }
 }
