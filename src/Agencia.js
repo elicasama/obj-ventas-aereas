@@ -22,4 +22,10 @@ module.exports = class Agencia {
       .filter((vuelo) => vuelo.destino == destino)
       .map((vuelo) => vuelo.fecha);
   }
+
+  vuelosEntreFechas(fecha1, fecha2) {
+    return this.vuelos.filter(
+      (vuelo) => fecha1 <= vuelo.fecha && vuelo.fecha <= fecha2
+    );
+  }
 };

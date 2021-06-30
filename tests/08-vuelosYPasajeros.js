@@ -12,16 +12,16 @@ describe.only("Vuelos y Pasajeros", () => {
   beforeEach(() => {
     Configuracion.criterio = new Segura();
     vueloDePasajeros2 = new VueloDePasajeros(
-        "07-11-2022",
-        new Avion(100, 8, 1000),
-        "Buenos Aires",
-        "Tahiti",
-        600,
-        new Estricta()
-      );
+      "2022-11-07",
+      new Avion(100, 8, 1000),
+      "Buenos Aires",
+      "Tahiti",
+      600,
+      new Estricta()
+    );
 
     vueloDePasajeros = new VueloDePasajeros(
-      "23-03-2021",
+      "2021-03-23",
       new Avion(100, 8, 1000),
       "Buenos Aires",
       "Brasil",
@@ -30,7 +30,7 @@ describe.only("Vuelos y Pasajeros", () => {
     );
     vueloDePasajeros.pasajesVendidos = [];
     vueloCharter = new VueloCharter(
-      "10-06-2021",
+      "2021-06-11",
       new Avion(300, 6, 3000),
       "Salta",
       "Tahiti",
@@ -64,7 +64,7 @@ describe.only("Vuelos y Pasajeros", () => {
     });
   });
   describe("Saber el / los vuelos de un pasajero", () => {
-    it("Conocer los vuelos de un pasajero con dni dni 11111111", () => {
+    it("Conocer los vuelos de un pasajero con dni 11111111", () => {
       const agencia = new Agencia();
 
       vueloDePasajeros.venderPasaje("10-03-2021", 11111111);
@@ -80,20 +80,41 @@ describe.only("Vuelos y Pasajeros", () => {
     });
   });
 
-  describe("Fechas de los vuelos de un pasajero a un destino", () => {
-    it("Conocer los vuelos de un pasajero con dni dni 11111111", () => {
+  describe("Fechas de los vuelos", () => {
+    it("Conocer las fechas de vuelos de un pasajero", () => {
       const agencia = new Agencia();
 
-      vueloDePasajeros.venderPasaje("05-03-2021", 11111111);
-      vueloCharter.venderPasaje("10-12-2021", 11111111); // fecha:  "10-06-2021" // destino : "Tahiti"
-      vueloDePasajeros2.venderPasaje("10-3-2021", 11111111); // fecha:  "07-11-2022" // destino : "Tahiti"
+      vueloDePasajeros.venderPasaje("05-03-2021", 11111111); // fecha: "2021-03-23" // destino: "Brasil"
+      vueloCharter.venderPasaje("10-12-2021", 11111111); // fecha:  "2021-06-11" // destino : "Tahiti"
+      vueloDePasajeros2.venderPasaje("10-3-2021", 11111111); // fecha:  "2022-11-07" // destino : "Tahiti"
 
       agencia.agregarVuelo(vueloDePasajeros);
       agencia.agregarVuelo(vueloCharter);
       agencia.agregarVuelo(vueloDePasajeros2);
 
-      assert.deepEqual(["10-06-2021", "07-11-2022"], agencia.fechasDeViaje(11111111, "Tahiti"));
+      assert.deepEqual(
+        ["2021-06-11", "2022-11-07"],
+        agencia.fechasDeViaje(11111111, "Tahiti")
+      );
+    });
+  });
+
+  describe("Vuelos entre dos fechas", () => {
+    it("Identificar los vuelos de la agencia entre dos fechas", () => {
+      const agencia = new Agencia();
+
+      vueloDePasajeros.venderPasaje("2021-05-11", 11111111); // fecha: "23-03-2021" // destino: "Brasil"
+      vueloCharter.venderPasaje("2021-05-10", 11111111); // fecha:  "10-06-2021" // destino : "Tahiti"
+      vueloDePasajeros2.venderPasaje("2021-06-10", 11111111); // fecha:  "07-11-2022" // destino : "Tahiti"
+
+      agencia.agregarVuelo(vueloDePasajeros);
+      agencia.agregarVuelo(vueloCharter);
+      agencia.agregarVuelo(vueloDePasajeros2);
+
+      assert.deepEqual(
+        [vueloCharter, vueloDePasajeros2],
+        agencia.vuelosEntreFechas("2021-05-12", "2024-05-10")
+      );
     });
   });
 });
-

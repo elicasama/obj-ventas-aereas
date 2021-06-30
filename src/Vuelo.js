@@ -48,12 +48,7 @@ module.exports = class Vuelo {
     return _.sumBy(this.pasajesVendidos, (pasaje) => pasaje.importeAbonado);
   }
 
-  // TODO: Tiene pasaje? para verificar que un DNI tiene pasaje para este vuelo
   tienePasaje(dni) {
     return this.pasajesVendidos.some((pasaje) => pasaje.dni == dni);
-  }
-
-  fechaDelVuelo() {
-    return this.fecha;
   }
 };
