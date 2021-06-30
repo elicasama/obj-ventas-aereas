@@ -8,7 +8,7 @@ const VueloDeCarga = require("../src/VueloDeCarga");
 const VueloCharter = require("../src/VueloCharter");
 const Agencia = require("../src/Agencia");
 
-describe.only("Vuelos y Pasajeros", () => {
+describe("Vuelos y Pasajeros", () => {
   beforeEach(() => {
     Configuracion.criterio = new Segura();
     vueloDePasajeros2 = new VueloDePasajeros(
@@ -95,25 +95,6 @@ describe.only("Vuelos y Pasajeros", () => {
       assert.deepEqual(
         ["2021-06-11", "2022-11-07"],
         agencia.fechasDeViaje(11111111, "Tahiti")
-      );
-    });
-  });
-
-  describe("Vuelos entre dos fechas", () => {
-    it("Identificar los vuelos de la agencia entre dos fechas", () => {
-      const agencia = new Agencia();
-
-      vueloDePasajeros.venderPasaje("2021-05-11", 11111111); // fecha: "23-03-2021" // destino: "Brasil"
-      vueloCharter.venderPasaje("2021-05-10", 11111111); // fecha:  "10-06-2021" // destino : "Tahiti"
-      vueloDePasajeros2.venderPasaje("2021-06-10", 11111111); // fecha:  "07-11-2022" // destino : "Tahiti"
-
-      agencia.agregarVuelo(vueloDePasajeros);
-      agencia.agregarVuelo(vueloCharter);
-      agencia.agregarVuelo(vueloDePasajeros2);
-
-      assert.deepEqual(
-        [vueloCharter, vueloDePasajeros2],
-        agencia.vuelosEntreFechas("2021-05-12", "2024-05-10")
       );
     });
   });
