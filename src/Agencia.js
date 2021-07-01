@@ -13,12 +13,20 @@ module.exports = class Agencia {
     return this.vuelos.length;
   }
 
-  vuelosDeUnPasajero(dni) {
-    return this.vuelos.filter((vuelo) => vuelo.tienePasaje(dni));
+  vuelosDeUnPasajero(pasajero) {
+    return this.vuelos.filter((vuelo) => vuelo.tienePasaje(pasajero));
   }
 
-  fechasDeViaje(dni, destino) {
-    return this.vuelosDeUnPasajero(dni)
+  sonCompañeros(pasajero1, pasajero2) {
+    return (
+      this.vuelosDeUnPasajero(pasajero1).filter((vuelo) =>
+        this.vuelosDeUnPasajero(pasajero2).includes(vuelo)
+      ).length >= 3
+    );
+  }
+
+  fechasDeViaje(pasajero, destino) {
+    return this.vuelosDeUnPasajero(pasajero)
       .filter((vuelo) => vuelo.destino == destino)
       .map((vuelo) => vuelo.fecha);
   }
@@ -44,5 +52,9 @@ module.exports = class Agencia {
       this.vuelosParaDestinoEntreFechas(destino, fecha1, fecha2),
       (vuelo) => vuelo.cantidadAsientosLibres()
     );
+  }
+
+  cantidaDePasajes(dni) {
+    return _.countBy(this.vuelos, (vuelo) => vuelo.tienePasaje(dni)).true;
   }
 };

@@ -34,10 +34,10 @@ module.exports = class Vuelo {
     return configuracion.pesoStandarIATA * this.cantidadAsientosVendidos();
   }
 
-  venderPasaje(fecha, dni) {
+  venderPasaje(fecha, pasajero) {
     if (!this.sePuedeVenderUnPasaje())
       throw new errores.NoSePuedeVenderElPasaje();
-    this.pasajesVendidos.push(new Pasaje(fecha, dni, this.precioDelVuelo()));
+    this.pasajesVendidos.push(new Pasaje(fecha, pasajero, this.precioDelVuelo()));
   }
 
   sePuedeVenderUnPasaje() {
@@ -48,7 +48,8 @@ module.exports = class Vuelo {
     return _.sumBy(this.pasajesVendidos, (pasaje) => pasaje.importeAbonado);
   }
 
-  tienePasaje(dni) {
-    return this.pasajesVendidos.some((pasaje) => pasaje.dni == dni);
+  tienePasaje(pasajero) {
+    return this.pasajesVendidos.some((pasaje) => pasaje.pasajero.dni == pasajero.dni);
   }
+  
 };

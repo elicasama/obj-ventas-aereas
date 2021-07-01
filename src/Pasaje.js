@@ -1,9 +1,9 @@
 const Vuelo = require("./Vuelo");
 
 module.exports = class Pasaje {
-  constructor(fechaDeVenta, dni, importeAbonado) {
+  constructor(fechaDeVenta, pasajero, importeAbonado) {
     this.fechaDeVenta = fechaDeVenta;
-    this.dni = dni;
+    this.pasajero = pasajero;
     this.importeAbonado = importeAbonado;
   }
 };
