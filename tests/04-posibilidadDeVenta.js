@@ -13,7 +13,6 @@ const Pasajero = require("../src/Pasajero");
 describe("Permitir la venta según criterio", () => {
   let vueloDePasajeros, pasajero;
 
-
   beforeEach(() => {
     Configuracion.criterio = new Segura();
     vueloDePasajeros = new VueloDePasajeros(
@@ -25,7 +24,7 @@ describe("Permitir la venta según criterio", () => {
       new Estricta()
     );
     vueloDePasajeros.pasajesVendidos = [];
-    pasajero = new Pasajero(26581333)
+    pasajero = new Pasajero(26581333);
   });
 
   describe("Segura", () => {
@@ -95,6 +94,7 @@ describe("Permitir la venta según criterio", () => {
     beforeEach(() => {
       Configuracion.criterio = new Pandemia();
     });
+    
     it("No se pueden vender vuelos", () => {
       assert.throws(() => {
         vueloDePasajeros.venderPasaje("22-03-2021", pasajero);

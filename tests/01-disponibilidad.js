@@ -6,7 +6,7 @@ const VueloDeCarga = require("../src/VueloDeCarga");
 
 
 describe("Agencia de Vuelos", () => {
-  describe("Disponibilidades de asientos - antes de vender un pasaje", () => {
+  describe("Disponibilid de asientos - antes de vender un pasaje", () => {
     it("Vuelo de carga, siempre tiene 10 asientos disponibles", () => {
       const vueloDeCarga = new VueloDeCarga(
         "23-03",

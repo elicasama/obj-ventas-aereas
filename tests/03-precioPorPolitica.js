@@ -3,7 +3,6 @@ const Avion = require("../src/Avion");
 const VueloDePasajeros = require("../src/VueloDePasajeros");
 const Estricta = require("../src/Estricta");
 const Remate = require("../src/Remate");
-
 const VentaAnticipada = require("../src/VentaAnticipada");
 
 describe("Valores del pasaje según la política", () => {
@@ -67,6 +66,7 @@ describe("Valores del pasaje según la política", () => {
       for (i = 0; i < 30; i++) {
         vueloDePasajeros.venderPasaje("22-03-2021", 26581333);
       }
+
       assert.equal(180, vueloDePasajeros.precioDelVuelo()); // 180 es el 60% de 600
     });
     it("Si el vuelo tiene entre 40 y 79 pasajes vendidos, 60%, del precio estándar", () => {

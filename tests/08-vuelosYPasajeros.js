@@ -4,7 +4,6 @@ const VueloDePasajeros = require("../src/VueloDePasajeros");
 const Configuracion = require("../src/Configuracion");
 const Segura = require("../src/Segura");
 const Estricta = require("../src/Estricta");
-const VueloDeCarga = require("../src/VueloDeCarga");
 const VueloCharter = require("../src/VueloCharter");
 const Agencia = require("../src/Agencia");
 const Pasajero = require("../src/Pasajero");
@@ -31,7 +30,7 @@ describe("Vuelos y Pasajeros", () => {
       600,
       new Estricta()
     );
-    vueloDePasajeros.pasajesVendidos = [];
+
     vueloCharter = new VueloCharter(
       "2021-06-11",
       new Avion(300, 6, 3000),
@@ -40,20 +39,19 @@ describe("Vuelos y Pasajeros", () => {
       600,
       new Estricta()
     );
-    vueloCharter.pasajesVendidos = [];
 
-    pasajero = new Pasajero(11111111)
+    pasajero = new Pasajero(11111111);
   });
 
   describe("Saber si un pasajero está en un vuelo determinado ", () => {
-    it("Sí: si le vendieron un pasaje al dni 11111111", () => {
+    it("Sí: si le vendieron un pasaje pasajero con dni = 11111111", () => {
       vueloDePasajeros.venderPasaje("10-03-2021", pasajero);
 
       assert.equal(true, vueloDePasajeros.tienePasaje(pasajero));
     });
-    it("No: si no le vendieron un pasaje al dni 11111111", () => {
-      pasajero2 = new Pasajero(2222222)
-      vueloDePasajeros.venderPasaje("10-03-2021", 2222222);
+    it("No: si no le vendieron un pasaje al pasajero con dni = 11111111", () => {
+      pasajero2 = new Pasajero(2222222);
+      vueloDePasajeros.venderPasaje("10-03-2021", pasajero2);
 
       assert.equal(false, vueloDePasajeros.tienePasaje(pasajero));
     });
@@ -69,7 +67,7 @@ describe("Vuelos y Pasajeros", () => {
       assert.equal(1, agencia.cantidadDeVueltos());
     });
   });
-  describe("Saber el / los vuelos de un pasajero", () => {
+  describe("Saber el/los vuelos de un pasajero", () => {
     it("Conocer los vuelos de un pasajero con dni 11111111", () => {
       const agencia = new Agencia();
 
@@ -87,7 +85,7 @@ describe("Vuelos y Pasajeros", () => {
   });
 
   describe("Fechas de los vuelos", () => {
-    it("Conocer las fechas de vuelos de un pasajero", () => {
+    it("Conocer las fechas de vuelos de un pasajero a un destino dado", () => {
       const agencia = new Agencia();
 
       vueloDePasajeros.venderPasaje("05-03-2021", pasajero); // fecha: "2021-03-23" // destino: "Brasil"

@@ -4,7 +4,7 @@ const errores = require("../src/errores");
 const VueloCharter = require("../src/VueloCharter");
 const VueloDeCarga = require("../src/VueloDeCarga");
 
-describe("Es Relajado?", () => {
+describe("Es un vuelo relajado?", () => {
   it("No: si la cabina < 4 metros aunque tenga menos de 100 asientos disponibles", () => {
     const vueloDeCarga = new VueloDeCarga(
       "23-03",

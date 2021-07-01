@@ -7,7 +7,7 @@ const Estricta = require("../src/Estricta");
 const Remate = require("../src/Remate");
 const VentaAnticipada = require("../src/VentaAnticipada");
 
-describe("Importe vendido para un vuelo - según politica", () => {
+describe("Importe vendido para un vuelo - según política", () => {
   let vueloDePasajeros;
 
   beforeEach(() => {

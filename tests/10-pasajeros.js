@@ -1,15 +1,20 @@
 var assert = require("assert");
+const Configuracion = require("../src/Configuracion");
 const Avion = require("../src/Avion");
 const VueloDePasajeros = require("../src/VueloDePasajeros");
-const Configuracion = require("../src/Configuracion");
+const VueloCharter = require("../src/VueloCharter");
 const Segura = require("../src/Segura");
 const Estricta = require("../src/Estricta");
-const VueloCharter = require("../src/VueloCharter");
 const Agencia = require("../src/Agencia");
-const Pasajero = require("../src/Pasajero")
+const Pasajero = require("../src/Pasajero");
 
 describe("Mirando a los Pasajeros", () => {
-  let vueloDePasajeros, vueloDePasajeros2, vueloCharter, agencia, pasajero1, pasajero2;
+  let vueloDePasajeros,
+    vueloDePasajeros2,
+    vueloCharter,
+    agencia,
+    pasajero1,
+    pasajero2;
 
   beforeEach(() => {
     Configuracion.criterio = new Segura();
@@ -56,8 +61,8 @@ describe("Mirando a los Pasajeros", () => {
     agencia.agregarVuelo(vueloDePasajeros3);
     agencia.agregarVuelo(vueloCharter);
 
-    pasajero1 = new Pasajero(11111111)
-    pasajero2 = new Pasajero(22222222)
+    pasajero1 = new Pasajero(11111111);
+    pasajero2 = new Pasajero(22222222);
 
     vueloDePasajeros.venderPasaje("2021-05-11", pasajero1);
     vueloDePasajeros.venderPasaje("2021-06-10", pasajero2);
@@ -66,7 +71,7 @@ describe("Mirando a los Pasajeros", () => {
     vueloDePasajeros2.venderPasaje("2021-06-03", pasajero2);
   });
 
-    describe("Pasajes comprados", () => {
+  describe("Pasajes comprados", () => {
     it("Cantidad de pasajes comprados en la agencia", () => {
       // ya vienen compartiendo dos vuelos
 
@@ -76,8 +81,8 @@ describe("Mirando a los Pasajeros", () => {
     });
   });
 
-  describe("Son compañeras?", () => {
-    it("Son compañeras si comparten 3 o más vuelos", () => {
+  describe("Son compañeros?", () => {
+    it("Son compañeros si comparten 3 o más vuelos", () => {
       // ya vienen compartiendo dos vuelos
       vueloDePasajeros3.venderPasaje("2020-05-11", pasajero1);
       vueloDePasajeros3.venderPasaje("2020-06-10", pasajero2);
@@ -86,12 +91,11 @@ describe("Mirando a los Pasajeros", () => {
 
       assert.equal(true, agencia.sonCompañeros(pasajero1, pasajero2));
     });
-  
 
-  it("No son compañeras si no comparten al menos 3 vuelos", () => {
-    // solo comparten dos vuelos
+    it("No son compañeros si no comparten al menos 3 vuelos", () => {
+      // solo comparten dos vuelos
 
-    assert.equal(false, agencia.sonCompañeros(pasajero1, pasajero2));
+      assert.equal(false, agencia.sonCompañeros(pasajero1, pasajero2));
+    });
   });
-});
 });

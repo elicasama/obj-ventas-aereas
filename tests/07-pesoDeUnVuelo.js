@@ -44,7 +44,7 @@ describe("Peso del Vuelo", () => {
         "Brasil",
         600,
         new Estricta(),
-        1000  // peso de la carga
+        1000 // peso de la carga
       );
       vueloDeCarga.pasajesVendidos = [];
 
@@ -68,7 +68,7 @@ describe("Peso del Vuelo", () => {
         "Buenos Aires",
         "Brasil",
         600,
-        new Estricta(),
+        new Estricta()
       );
       vueloCharter.pasajesVendidos = [];
 
@@ -78,7 +78,6 @@ describe("Peso del Vuelo", () => {
       // peso del avión                       = 10000
       // peso de los pasajeros (2 * 70)       =   210
       // peso fijo                            =  5000
-      
 
       assert.equal(15210, vueloCharter.pesoTotalDelVuelo());
     });
