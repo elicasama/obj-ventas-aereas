@@ -6,8 +6,8 @@ module.exports = class VueloDePasajeros extends Vuelo {
     super(fecha, avion, origen, destino, precioEstandar, politica);
   }
 
-  cantidadAsientosLibres() {
-    return this.avion.cantidadDeAsientos - this.cantidadAsientosVendidos();
+  cantidadAsientosDisponibles() {
+    return this.avion.cantidadDeAsientos;
   }
 
   pesoDeLaCarga() {

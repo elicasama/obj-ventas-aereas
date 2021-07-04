@@ -2,7 +2,9 @@
 module.exports = class LaxaPorcentual {
   puedoVenderUnPasaje(vuelo) {
     return (
-      vuelo.avion.cantidadDeAsientos * 1.1 - vuelo.cantidadAsientosVendidos() > 0
+      vuelo.cantidadAsientosDisponibles() * 1.1 -
+        vuelo.cantidadAsientosVendidos() >
+      0
     );
   }
 };

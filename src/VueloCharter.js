@@ -5,8 +5,8 @@ module.exports = class VueloCharter extends Vuelo {
     super(fecha, avion, origen, destino, precioEstandar, politica);
   }
 
-  cantidadAsientosLibres() {
-    return this.avion.cantidadDeAsientos - 25 - this.cantidadAsientosVendidos();
+  cantidadAsientosDisponibles() {
+    return this.avion.cantidadDeAsientos - 25;
   }
 
   pesoDeLaCarga() {

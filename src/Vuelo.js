@@ -22,6 +22,10 @@ module.exports = class Vuelo {
     return this.pasajesVendidos.length;
   }
 
+  cantidadAsientosLibres() {
+    return this.cantidadAsientosDisponibles() - this.cantidadAsientosVendidos();
+  }
+
   precioDelVuelo() {
     return this.politica.calcularPrecio(this);
   }
@@ -37,7 +41,9 @@ module.exports = class Vuelo {
   venderPasaje(fecha, pasajero) {
     if (!this.sePuedeVenderUnPasaje())
       throw new errores.NoSePuedeVenderElPasaje();
-    this.pasajesVendidos.push(new Pasaje(fecha, pasajero, this.precioDelVuelo()));
+    this.pasajesVendidos.push(
+      new Pasaje(fecha, pasajero, this.precioDelVuelo())
+    );
   }
 
   sePuedeVenderUnPasaje() {
@@ -49,7 +55,8 @@ module.exports = class Vuelo {
   }
 
   tienePasaje(pasajero) {
-    return this.pasajesVendidos.some((pasaje) => pasaje.pasajero.dni == pasajero.dni);
+    return this.pasajesVendidos.some(
+      (pasaje) => pasaje.pasajero.dni == pasajero.dni
+    );
   }
-  
 };

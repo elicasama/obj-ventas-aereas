@@ -59,7 +59,7 @@ describe("Valores del pasaje según la política", () => {
         600,
         new VentaAnticipada()
       );
-      vueloDePasajeros.pasajesVendidos = [];
+      // vueloDePasajeros.pasajesVendidos = [];
     });
 
     it("Si el vuelo tiene menos de 40 pasajes vendidos, 30% del precio estándar", () => {

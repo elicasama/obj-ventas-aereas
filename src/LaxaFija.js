@@ -2,7 +2,10 @@
 module.exports = class LaxaFija {
   puedoVenderUnPasaje(vuelo) {
     return (
-      vuelo.avion.cantidadDeAsientos + 10 - vuelo.cantidadAsientosVendidos() > 0
+      vuelo.cantidadAsientosDisponibles() +
+        10 -
+        vuelo.cantidadAsientosVendidos() >
+      0
     );
   }
 };
