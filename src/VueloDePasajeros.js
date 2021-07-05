@@ -1,5 +1,5 @@
 const Vuelo = require("./Vuelo");
-const configuracion = require("./Configuracion");
+const agencia = require("../src/Agencia");
 
 module.exports = class VueloDePasajeros extends Vuelo {
   constructor(fecha, avion, origen, destino, precioEstandar, politica) {
@@ -11,8 +11,7 @@ module.exports = class VueloDePasajeros extends Vuelo {
   }
 
   pesoDeLaCarga() {
-    return (
-      configuracion.pesoDeEquipajePorPasajero * this.cantidadAsientosVendidos()
-    );
+    return agencia.pesoDeEquipajePorPasajero * this.cantidadAsientosVendidos();
+    
   }
 };

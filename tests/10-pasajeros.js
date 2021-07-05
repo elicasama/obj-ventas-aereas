@@ -1,24 +1,15 @@
 var assert = require("assert");
-const Configuracion = require("../src/Configuracion");
 const Avion = require("../src/Avion");
 const VueloDePasajeros = require("../src/VueloDePasajeros");
 const VueloCharter = require("../src/VueloCharter");
-const Segura = require("../src/Segura");
 const Estricta = require("../src/Estricta");
-const Agencia = require("../src/Agencia");
+const agencia = require("../src/Agencia");
 const Pasajero = require("../src/Pasajero");
 
 describe("Mirando a los Pasajeros", () => {
-  let vueloDePasajeros,
-    vueloDePasajeros2,
-    vueloCharter,
-    agencia,
-    pasajero1,
-    pasajero2;
+  let vueloDePasajeros, vueloDePasajeros2, vueloCharter, pasajero1, pasajero2;
 
   beforeEach(() => {
-    Configuracion.criterio = new Segura();
-
     vueloDePasajeros = new VueloDePasajeros(
       "2021-03-23",
       new Avion(100, 8, 1000),
@@ -54,8 +45,7 @@ describe("Mirando a los Pasajeros", () => {
       new Estricta()
     );
 
-    agencia = new Agencia();
-
+    agencia.vuelos = [];
     agencia.agregarVuelo(vueloDePasajeros);
     agencia.agregarVuelo(vueloDePasajeros2);
     agencia.agregarVuelo(vueloDePasajeros3);

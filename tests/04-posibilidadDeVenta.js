@@ -1,7 +1,6 @@
 var assert = require("assert");
 const Avion = require("../src/Avion");
 const errores = require("../src/errores");
-const Configuracion = require("../src/Configuracion");
 const VueloDePasajeros = require("../src/VueloDePasajeros");
 const Segura = require("../src/Segura");
 const Estricta = require("../src/Estricta");
@@ -9,12 +8,12 @@ const Pandemia = require("../src/Pandemia");
 const LaxaFija = require("../src/LaxaFija");
 const LaxaPorcentual = require("../src/LaxaPorcentual");
 const Pasajero = require("../src/Pasajero");
+const agencia = require("../src/Agencia");
 
 describe("Permitir la venta según criterio", () => {
   let vueloDePasajeros, pasajero;
 
   beforeEach(() => {
-    Configuracion.criterio = new Segura();
     vueloDePasajeros = new VueloDePasajeros(
       "23-03",
       new Avion(100, 8, 1000),
@@ -46,7 +45,7 @@ describe("Permitir la venta según criterio", () => {
 
   describe("Laxa Fija - Se puede vender en cada vuelo hasta 10 pasajes más de los asientos disponibles.", () => {
     beforeEach(() => {
-      Configuracion.criterio = new LaxaFija();
+      agencia.criterio = new LaxaFija();
     });
 
     it("Puedo vender si se vendieron menos de capacidad del avión + 10", () => {
@@ -69,7 +68,7 @@ describe("Permitir la venta según criterio", () => {
 
   describe("Laxa Porcentual - Se puede vender en cada vuelo hasta 10% más de los asientos disponibles.", () => {
     beforeEach(() => {
-      Configuracion.criterio = new LaxaPorcentual();
+      agencia.criterio = new LaxaPorcentual();
     });
 
     it("Puedo vender si no se superó el 10% de la capacidad total", () => {
@@ -92,9 +91,9 @@ describe("Permitir la venta según criterio", () => {
 
   describe("Pandemia", () => {
     beforeEach(() => {
-      Configuracion.criterio = new Pandemia();
+      agencia.criterio = new Pandemia();
     });
-    
+
     it("No se pueden vender vuelos", () => {
       assert.throws(() => {
         vueloDePasajeros.venderPasaje("22-03-2021", pasajero);

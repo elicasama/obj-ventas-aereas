@@ -1,18 +1,15 @@
 var assert = require("assert");
 const Avion = require("../src/Avion");
 const VueloDePasajeros = require("../src/VueloDePasajeros");
-const Configuracion = require("../src/Configuracion");
-const Segura = require("../src/Segura");
 const Estricta = require("../src/Estricta");
 const VueloCharter = require("../src/VueloCharter");
-const Agencia = require("../src/Agencia");
+const agencia = require("../src/Agencia");
 const Pasajero = require("../src/Pasajero");
 
 describe("Vuelos y Pasajeros", () => {
   let pasajero, pasajero2;
 
   beforeEach(() => {
-    Configuracion.criterio = new Segura();
     vueloDePasajeros2 = new VueloDePasajeros(
       "2022-11-07",
       new Avion(100, 8, 1000),
@@ -61,7 +58,6 @@ describe("Vuelos y Pasajeros", () => {
     it("Agregar un vuelo a la agencia", () => {
       vueloDePasajeros.venderPasaje("10-03-2021", pasajero);
 
-      const agencia = new Agencia();
       agencia.agregarVuelo(vueloDePasajeros);
 
       assert.equal(1, agencia.cantidadDeVueltos());
@@ -69,8 +65,8 @@ describe("Vuelos y Pasajeros", () => {
   });
   describe("Saber el/los vuelos de un pasajero", () => {
     it("Conocer los vuelos de un pasajero con dni 11111111", () => {
-      const agencia = new Agencia();
-
+      // const agencia = new Agencia();
+      agencia.vuelos = [];
       vueloDePasajeros.venderPasaje("10-03-2021", pasajero);
       vueloCharter.venderPasaje("10-23-2021", pasajero);
 
@@ -86,12 +82,13 @@ describe("Vuelos y Pasajeros", () => {
 
   describe("Fechas de los vuelos", () => {
     it("Conocer las fechas de vuelos de un pasajero a un destino dado", () => {
-      const agencia = new Agencia();
+      // const agencia = new Agencia();
 
       vueloDePasajeros.venderPasaje("05-03-2021", pasajero); // fecha: "2021-03-23" // destino: "Brasil"
       vueloCharter.venderPasaje("10-12-2021", pasajero); // fecha:  "2021-06-11" // destino : "Tahiti"
       vueloDePasajeros2.venderPasaje("10-3-2021", pasajero); // fecha:  "2022-11-07" // destino : "Tahiti"
 
+      agencia.vuelos = [];
       agencia.agregarVuelo(vueloDePasajeros);
       agencia.agregarVuelo(vueloCharter);
       agencia.agregarVuelo(vueloDePasajeros2);

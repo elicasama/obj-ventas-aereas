@@ -1,8 +1,11 @@
 var _ = require("lodash");
+const Segura = require("./Segura");
 
-module.exports = class Agencia {
+class Agencia {
   constructor() {
     this.vuelos = [];
+    this.pesoDeEquipajePorPasajero= 20
+    this.criterio= new Segura()
   }
 
   agregarVuelo(vuelo) {
@@ -58,3 +61,5 @@ module.exports = class Agencia {
     return _.countBy(this.vuelos, (vuelo) => vuelo.tienePasaje(dni)).true;
   }
 };
+
+module.exports = new Agencia();

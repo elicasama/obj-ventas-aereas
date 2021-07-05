@@ -1,7 +1,9 @@
 var _ = require("lodash");
-const configuracion = require("./Configuracion");
 const errores = require("./errores");
 const Pasaje = require("../src/Pasaje");
+const iata = require("../src/iata")
+const agencia = require("../src/Agencia");
+
 
 module.exports = class Vuelo {
   constructor(fecha, avion, origen, destino, precioEstandar, politica) {
@@ -35,7 +37,7 @@ module.exports = class Vuelo {
   }
 
   pesoDeLosPasajeros() {
-    return configuracion.pesoStandarIATA * this.cantidadAsientosVendidos();
+    return iata.pesoEstandar * this.cantidadAsientosVendidos();
   }
 
   venderPasaje(fecha, pasajero) {
@@ -47,7 +49,7 @@ module.exports = class Vuelo {
   }
 
   sePuedeVenderUnPasaje() {
-    return configuracion.criterio.puedoVenderUnPasaje(this);
+    return agencia.criterio.puedoVenderUnPasaje(this);
   }
 
   importeVendido() {

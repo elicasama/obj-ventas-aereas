@@ -1,17 +1,16 @@
 var assert = require("assert");
-const Configuracion = require("../src/Configuracion");
 const Avion = require("../src/Avion");
 const VueloDePasajeros = require("../src/VueloDePasajeros");
 const Segura = require("../src/Segura");
 const Estricta = require("../src/Estricta");
 const Remate = require("../src/Remate");
 const VentaAnticipada = require("../src/VentaAnticipada");
+const agencia = require("../src/Agencia");
 
 describe("Importe vendido para un vuelo - según política", () => {
   let vueloDePasajeros;
 
   beforeEach(() => {
-    Configuracion.criterio = new Segura();
     vueloDePasajeros = new VueloDePasajeros(
       "23-03",
       new Avion(100, 8, 1000),

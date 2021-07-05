@@ -1,19 +1,18 @@
 var assert = require("assert");
 const Avion = require("../src/Avion");
 const VueloDePasajeros = require("../src/VueloDePasajeros");
-const Configuracion = require("../src/Configuracion");
 const Segura = require("../src/Segura");
 const Estricta = require("../src/Estricta");
 const VueloDeCarga = require("../src/VueloDeCarga");
 const VueloCharter = require("../src/VueloCharter");
 
 describe("Peso del Vuelo", () => {
-  beforeEach(() => {
-    Configuracion.criterio = new Segura();
-  });
+  // beforeEach(() => {
+  //   Configuracion.criterio = new Segura();
+  // });
 
   describe("De Pasajeros ", () => {
-    it("Viajando 2 pasajeros", () => {
+    it("Es la suma del peso del avión + el peso de los pasajeros + todo su equipaje", () => {
       vueloDePasajeros = new VueloDePasajeros(
         "23-03",
         new Avion(100, 8, 1000),
@@ -36,7 +35,7 @@ describe("Peso del Vuelo", () => {
   });
 
   describe("De carga ", () => {
-    it("Viajando 2 pasajeros", () => {
+    it("Es el peso del avión + el peso de los pasajeros + el peso de la carga del avión", () => {
       const vueloDeCarga = new VueloDeCarga(
         "23-03",
         new Avion(100, 8, 3000),
@@ -61,7 +60,7 @@ describe("Peso del Vuelo", () => {
   });
 
   describe("Charter ", () => {
-    it("Viajando 3 pasajeros", () => {
+    it("Es el peso del avión + el peso de los pasajeros + un peso fijo de 5000", () => {
       const vueloCharter = new VueloCharter(
         "23-03",
         new Avion(100, 8, 10000),
