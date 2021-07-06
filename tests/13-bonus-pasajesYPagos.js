@@ -18,6 +18,7 @@ describe.only("Pasajes comprados y pagados", () => {
     nigeria,
     brasil,
     pasajero,
+    pasajero2,
     pasajeBuenosAiresMadrid,
     pasajeBuenosAiresBrasil,
     pasajeBuenosAiresNigeria;
@@ -66,9 +67,12 @@ describe.only("Pasajes comprados y pagados", () => {
     buenosAiresBrasil.pasajesVendidos = [];
 
     pasajero = new Pasajero(11111111);
+    pasajero2 = new Pasajero(22222222);
 
     buenosAiresMadrid.venderPasaje("2020-04-15", pasajero); // Importe de compra: 600
     pasajeBuenosAiresMadrid = _.last(buenosAiresMadrid.pasajesVendidos);
+    
+    buenosAiresMadrid.venderPasaje("2020-04-15", pasajero2); // Importe de compra: 600
 
     buenosAiresNigeria.venderPasaje("2020-06-10", pasajero); // Importe de compra: 1000
     pasajeBuenosAiresNigeria = _.last(buenosAiresNigeria.pasajesVendidos);
@@ -117,6 +121,12 @@ describe.only("Pasajes comprados y pagados", () => {
         buenosAiresMadrid.pagarUnPasaje(pasajero, 100);
   
         assert.equal(300, pasajeBuenosAiresMadrid.saldoAPagar());
+      });
+      it("Saber el total de los pagos realizado para el vuelo por distintos pasajeros", () => {
+        buenosAiresMadrid.pagarUnPasaje(pasajero, 200);
+        buenosAiresMadrid.pagarUnPasaje(pasajero2, 600);
+    
+        assert.equal(800, buenosAiresMadrid.importeCobrado());
       });
   });
 });

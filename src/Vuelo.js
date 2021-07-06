@@ -56,6 +56,10 @@ module.exports = class Vuelo {
   importeVendido() {
     return _.sumBy(this.pasajesVendidos, (pasaje) => pasaje.importeAbonado);
   }
+  
+  importeCobrado() {
+    return _.sumBy(this.pasajesVendidos, (pasaje) => pasaje.pagoRealizado);
+  }
 
   tienePasaje(pasajero) {
     return this.pasajesVendidos.some(
