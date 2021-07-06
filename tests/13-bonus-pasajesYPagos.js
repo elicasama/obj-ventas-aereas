@@ -7,7 +7,6 @@ const Remate = require("../src/Remate");
 const agencia = require("../src/Agencia");
 const Ciudad = require("../src/Ciudad");
 const Pasajero = require("../src/Pasajero");
-const Pasaje = require("../src/Pasaje");
 
 describe.only("Pasajes comprados y pagados", () => {
   let buenosAiresMadrid,
@@ -58,9 +57,9 @@ describe.only("Pasajes comprados y pagados", () => {
     );
 
     agencia.vuelos = [];
-    agencia.agregarVuelo(buenosAiresMadrid); // fecha "2021-05-12" - intercontinental
-    agencia.agregarVuelo(buenosAiresNigeria); // fecha "2021-05-12" - intercontinental
-    agencia.agregarVuelo(buenosAiresBrasil); // fecha "2021-05-12" - NO intercontinental
+    agencia.agregarVuelo(buenosAiresMadrid);
+    agencia.agregarVuelo(buenosAiresNigeria);
+    agencia.agregarVuelo(buenosAiresBrasil);
 
     buenosAiresMadrid.pasajesVendidos = [];
     buenosAiresNigeria.pasajesVendidos = [];
@@ -115,21 +114,24 @@ describe.only("Pasajes comprados y pagados", () => {
 
       assert.equal(500, pasajeBuenosAiresMadrid.saldoAPagar());
     });
-    it("Si realiza varios pagos tiene que ir descontando Ej Pasaje = 600 Pago Realizado = 100 * 3  Restan = 300", () => {
+    it("Si realiza varios pagos tiene que ir descontando Ej Pasaje = 600 Pagos Realizados = 100 * 3  Restan = 300", () => {
       buenosAiresMadrid.pagarUnPasaje(pasajero, 100);
       buenosAiresMadrid.pagarUnPasaje(pasajero, 100);
       buenosAiresMadrid.pagarUnPasaje(pasajero, 100);
 
       assert.equal(300, pasajeBuenosAiresMadrid.saldoAPagar());
     });
-    it("Saber el total de los pagos realizado para el vuelo por distintos pasajeros", () => {
+    it.only("Saber el total de los pagos realizado para el vuelo por distintos pasajeros", () => {
+      // Sabemos que el total abonado por los pasajes para este vuelo es de 1200 gracias a buenosAiresMadrid.importeVendido()
+
       buenosAiresMadrid.pagarUnPasaje(pasajero, 200);
       buenosAiresMadrid.pagarUnPasaje(pasajero2, 600);
 
       assert.equal(800, buenosAiresMadrid.importeCobrado());
     });
   });
-  describe.only("Deudas", () => {
+
+  describe("Deudas", () => {
     it("Calcular el total de pagos de un pasajero en distintos pasajes", () => {
       buenosAiresMadrid.pagarUnPasaje(pasajero, 200);
       buenosAiresNigeria.pagarUnPasaje(pasajero, 800);
@@ -138,7 +140,7 @@ describe.only("Pasajes comprados y pagados", () => {
       assert.equal(1100, agencia.pagosRealizadosPor(pasajero));
     });
     it("La deuda de un pasajero es la diferencia entre los pasajes comprados y los importes pagados", () => {
-      // sabemos que el pasajero tiene una compra de pasajes por 1750 = gracias a: agencia.totalDeComprasDelPasajero(pasajero)
+      // sabemos que el pasajero tiene una compra de pasajes por 1750 gracias a: agencia.totalDeComprasDelPasajero(pasajero)
       buenosAiresMadrid.pagarUnPasaje(pasajero, 200);
       buenosAiresMadrid.pagarUnPasaje(pasajero, 200);
       buenosAiresNigeria.pagarUnPasaje(pasajero, 1000);
