@@ -31,56 +31,37 @@ describe("Permitir la venta según la ciudad de origen", () => {
     buenosAires = new Ciudad("Buenos Aires", "America");
   });
 
-  describe("Permitir la venta si la ciudad de origen deja vender pasajes", () => {
-    describe("Verificanco SOLO la condición de la ciudad", () => {
-      it("Se puede vender un pasaje si la ciudad de origen tiene un criterio que deja vender", () => {
-        agencia.agregarciudadeOrigenConCriterio(buenosAires, new Segura());
+  it("Se puede vender un pasaje si la ciudad de origen tiene un criterio que deja vender", () => {
+    agencia.agregarciudadeOrigenConCriterio(buenosAires, new LaxaFija());
 
-        assert.equal(true, vueloDePasajeros.sePuedeVenderUnPasajePorCiudad());
-      });
-      it("No puede vender un pasaje si la ciudad de origen tiene un criterio que NO deja vender ", () => {
-        agencia.agregarciudadeOrigenConCriterio(buenosAires, new Pandemia());
+    for (i = 0; i < 9; i++) {
+      vueloDePasajeros.venderPasaje("22-03-2021", pasajero); // 100 + 10% = 110 originales - Vendí 10 quedan 100 para vender
+    }
 
-        assert.equal(false, vueloDePasajeros.sePuedeVenderUnPasajePorCiudad());
-      });
-    });
-    describe("Verificanco ciudad y criterio general de la empresa", () => {
-      it("Se puede vender un pasaje si la ciudad de origen tiene un criterio que deja vender", () => {
-        agencia.agregarciudadeOrigenConCriterio(buenosAires, new LaxaFija());
+    assert.equal(true, vueloDePasajeros.sePuedeVenderUnPasaje());
+  });
 
-        for (i = 0; i < 9; i++) {
-          vueloDePasajeros.venderPasaje("22-03-2021", pasajero); // 100 + 10% = 110 originales - Vendí 10 quedan 100 para vender
-        }
+  it("Se puede vender si la ciudad de origen no tiene ningún criterio y la agencia tiene un criterio general que lo permita", () => {
+    for (i = 0; i < 2; i++) {
+      vueloDePasajeros.venderPasaje("22-03-2021", pasajero); // dejamos 98 asientos libres - X condicion general podría vender (Segura)
+    }
 
-        assert.equal(true, vueloDePasajeros.sePuedeVenderUnPasaje());
-      });
+    assert.equal(true, vueloDePasajeros.sePuedeVenderUnPasaje());
+  });
+  it("No se puede vender si el criterio de la ciudad de origen no lo permite", () => {
+    agencia.agregarciudadeOrigenConCriterio(buenosAires, new LaxaPorcentual());
 
-      it("Se puede vender si la ciudad de origen no tiene ningún criterio y la agencia tiene un criterio general que lo permita", () => {
-        for (i = 0; i < 2; i++) {
-          vueloDePasajeros.venderPasaje("22-03-2021", pasajero); // dejamos 98 asientos libres - X condicion general podría vender
-        }
+    for (i = 0; i < 111; i++) {
+      vueloDePasajeros.venderPasaje("22-03-2021", pasajero); // 100 + 10% = 110 originales - Vendí 110 No quedan para vender
+    }
 
-        assert.equal(true, vueloDePasajeros.sePuedeVenderUnPasaje());
-      });
-      it("No se puede vender si el criterio de la ciudad de origen no lo permite", () => {
-        agencia.agregarciudadeOrigenConCriterio(
-          buenosAires,
-          new LaxaPorcentual()
-        );
+    assert.equal(false, vueloDePasajeros.sePuedeVenderUnPasaje());
+  });
+  it("No se puede vender si la ciudad de origen no tiene ningún criterio pero la agencia tiene un criterio general que no lo permite", () => {
+    for (i = 0; i < 97; i++) {
+      vueloDePasajeros.venderPasaje("22-03-2021", pasajero); // dejamos menos de 3 asientos libres X criterio general no podría venderse (Segura)
+    }
 
-        for (i = 0; i < 111; i++) {
-          vueloDePasajeros.venderPasaje("22-03-2021", pasajero); // 100 + 10% = 110 originales - Vendí 110 No quedan para vender
-        }
-
-        assert.equal(false, vueloDePasajeros.sePuedeVenderUnPasaje());
-      });
-      it("No se puede vender si la ciudad de origen no tiene ningún criterio pero la agencia tiene un criterio general que no lo permite", () => {
-        for (i = 0; i < 97; i++) {
-          vueloDePasajeros.venderPasaje("22-03-2021", pasajero); // dejamos menos de 3 asientos libres X criterio general no podría venderse
-        }
-
-        assert.equal(false, vueloDePasajeros.sePuedeVenderUnPasaje());
-      });
-    });
+    assert.equal(false, vueloDePasajeros.sePuedeVenderUnPasaje());
   });
 });

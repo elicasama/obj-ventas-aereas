@@ -53,12 +53,6 @@ module.exports = class Vuelo {
       .puedoVenderUnPasaje(this);
   }
 
-  sePuedeVenderUnPasajePorCiudad() {
-    return agencia
-      .criterioDelaCiudadOrigen(this.origen)
-      .puedoVenderUnPasaje(this);
-  }
-
   importeVendido() {
     return _.sumBy(this.pasajesVendidos, (pasaje) => pasaje.importeAbonado);
   }
