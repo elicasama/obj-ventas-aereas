@@ -4,8 +4,9 @@ const Segura = require("./Segura");
 class Agencia {
   constructor() {
     this.vuelos = [];
-    this.pesoDeEquipajePorPasajero= 20
-    this.criterio= new Segura()
+    this.pesoDeEquipajePorPasajero = 20;
+    this.criterio = new Segura();
+    this.ciudadesOrigenConCriterio = []; // ej: {nombre: "Buenos Aires" criterio: new Segura()}
   }
 
   agregarVuelo(vuelo) {
@@ -60,6 +61,16 @@ class Agencia {
   cantidaDePasajes(dni) {
     return _.countBy(this.vuelos, (vuelo) => vuelo.tienePasaje(dni)).true;
   }
-};
+
+  agregarciudadeOrigenConCriterio(ciudad) {
+    this.ciudadesOrigenConCriterio.push(ciudad);
+  }
+
+  criterioDelaCiudadOrigen(ciudadOrigen) {
+    return this.ciudadesOrigenConCriterio.find(
+      (ciudad) => ciudad.nombre == ciudadOrigen
+    )?.criterio || this.criterio
+  }
+}
 
 module.exports = new Agencia();
