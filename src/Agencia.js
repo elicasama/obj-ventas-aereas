@@ -62,14 +62,17 @@ class Agencia {
     return _.countBy(this.vuelos, (vuelo) => vuelo.tienePasaje(dni)).true;
   }
 
-  agregarciudadeOrigenConCriterio(ciudad) {
+  agregarciudadeOrigenConCriterio(ciudad, criterio) {
+    ciudad.criterio = criterio;
     this.ciudadesOrigenConCriterio.push(ciudad);
   }
 
   criterioDelaCiudadOrigen(ciudadOrigen) {
-    return this.ciudadesOrigenConCriterio.find(
-      (ciudad) => ciudad.nombre == ciudadOrigen
-    )?.criterio || this.criterio
+    return (
+      this.ciudadesOrigenConCriterio.find(
+        (ciudad) => ciudad.nombre == ciudadOrigen
+      )?.criterio || this.criterio
+    );
   }
 }
 

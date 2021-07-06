@@ -9,9 +9,10 @@ const Estricta = require("../src/Estricta");
 const Pandemia = require("../src/Pandemia");
 const Pasajero = require("../src/Pasajero");
 const agencia = require("../src/Agencia");
+const Ciudad = require("../src/Ciudad");
 
 describe("Permitir la venta según la ciudad de origen", () => {
-  let vueloDePasajeros, pasajero;
+  let vueloDePasajeros, pasajero, buenosAires;
   // criterio general de la agencia = Segura;
   beforeEach(() => {
     vueloDePasajeros = new VueloDePasajeros(
@@ -26,33 +27,26 @@ describe("Permitir la venta según la ciudad de origen", () => {
     vueloDePasajeros.pasajesVendidos = [];
     pasajero = new Pasajero(26581333);
     agencia.ciudadesOrigenConCriterio = [];
+
+    buenosAires = new Ciudad("Buenos Aires", "America");
   });
 
   describe("Permitir la venta si la ciudad de origen deja vender pasajes", () => {
     describe("Verificanco SOLO la condición de la ciudad", () => {
       it("Se puede vender un pasaje si la ciudad de origen tiene un criterio que deja vender", () => {
-        agencia.agregarciudadeOrigenConCriterio({
-          nombre: "Buenos Aires",
-          criterio: new Segura(),
-        });
+        agencia.agregarciudadeOrigenConCriterio(buenosAires, new Segura());
 
         assert.equal(true, vueloDePasajeros.sePuedeVenderUnPasajePorCiudad());
       });
       it("No puede vender un pasaje si la ciudad de origen tiene un criterio que NO deja vender ", () => {
-        agencia.agregarciudadeOrigenConCriterio({
-          nombre: "Buenos Aires",
-          criterio: new Pandemia(),
-        });
+        agencia.agregarciudadeOrigenConCriterio(buenosAires, new Pandemia());
 
         assert.equal(false, vueloDePasajeros.sePuedeVenderUnPasajePorCiudad());
       });
     });
     describe("Verificanco ciudad y criterio general de la empresa", () => {
       it("Se puede vender un pasaje si la ciudad de origen tiene un criterio que deja vender", () => {
-        agencia.agregarciudadeOrigenConCriterio({
-          nombre: "Buenos Aires",
-          criterio: new LaxaFija(),
-        });
+        agencia.agregarciudadeOrigenConCriterio(buenosAires, new LaxaFija());
 
         for (i = 0; i < 9; i++) {
           vueloDePasajeros.venderPasaje("22-03-2021", pasajero); // 100 + 10% = 110 originales - Vendí 10 quedan 100 para vender
@@ -69,10 +63,10 @@ describe("Permitir la venta según la ciudad de origen", () => {
         assert.equal(true, vueloDePasajeros.sePuedeVenderUnPasaje());
       });
       it("No se puede vender si el criterio de la ciudad de origen no lo permite", () => {
-        agencia.agregarciudadeOrigenConCriterio({
-          nombre: "Buenos Aires",
-          criterio: new LaxaPorcentual(),
-        });
+        agencia.agregarciudadeOrigenConCriterio(
+          buenosAires,
+          new LaxaPorcentual()
+        );
 
         for (i = 0; i < 111; i++) {
           vueloDePasajeros.venderPasaje("22-03-2021", pasajero); // 100 + 10% = 110 originales - Vendí 110 No quedan para vender
