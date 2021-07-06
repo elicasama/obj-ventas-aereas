@@ -58,8 +58,8 @@ class Agencia {
     );
   }
 
-  cantidaDePasajes(dni) {
-    return _.countBy(this.vuelos, (vuelo) => vuelo.tienePasaje(dni)).true;
+  cantidaDePasajes(pasajero) {
+    return _.countBy(this.vuelos, (vuelo) => vuelo.tienePasaje(pasajero)).true;
   }
 
   agregarciudadeOrigenConCriterio(ciudad, criterio) {
@@ -76,11 +76,23 @@ class Agencia {
   }
 
   vuelosIntercontinentalesParaUnDía(fecha) {
-    return this._vuelosParaUnaFecha(fecha).filter((vuelo) => vuelo.esInercontinental());
+    return this._vuelosParaUnaFecha(fecha).filter((vuelo) =>
+      vuelo.esInercontinental()
+    );
+  }
+
+  totalDeComprasDelPasajero(pasajero) {
+    return _.sumBy(this.pasajesDe(pasajero), (pasaje) => pasaje.importeAbonado);
+  }
+
+  pasajesDe(pasajero) {
+    return this.vuelosDeUnPasajero(pasajero).map((vuelo) =>
+      vuelo.pasajeDe(pasajero)
+    );
   }
 
   _vuelosParaUnaFecha(fecha) {
-    return this.vuelos.filter((vuelo) => vuelo.fecha == fecha)
+    return this.vuelos.filter((vuelo) => vuelo.fecha == fecha);
   }
 }
 

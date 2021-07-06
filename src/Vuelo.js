@@ -63,6 +63,16 @@ module.exports = class Vuelo {
     );
   }
 
+  pasajeDe(pasajero) {
+    return this.pasajesVendidos.find(
+      (pasaje) => pasaje.pasajero.dni == pasajero.dni
+    );
+  }
+
+  importeDeUnPasajeVendido(pasajero) {
+    return this.pasajeDe(pasajero).importeAbonado;
+  }
+
   esInercontinental() {
     return this.origen.continente !== this.destino.continente;
   }

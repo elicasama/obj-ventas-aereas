@@ -62,7 +62,7 @@ describe("Mirando a los Pasajeros", () => {
   });
 
   describe("Pasajes comprados", () => {
-    it("Cantidad de pasajes comprados en la agencia", () => {
+    it("Cantidad de pasajes comprados en la agencia por un pasajero", () => {
       // ya vienen compartiendo dos vuelos
 
       vueloDePasajeros3.venderPasaje("2020-05-11", pasajero1);
