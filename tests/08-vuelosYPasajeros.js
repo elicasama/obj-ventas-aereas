@@ -60,7 +60,7 @@ describe("Vuelos y Pasajeros", () => {
 
       agencia.agregarVuelo(vueloDePasajeros);
 
-      assert.equal(1, agencia.cantidadDeVueltos());
+      assert.equal(1, agencia.cantidadDeVuelos());
     });
   });
   describe("Saber el/los vuelos de un pasajero", () => {

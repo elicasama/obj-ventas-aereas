@@ -13,7 +13,7 @@ class Agencia {
     this.vuelos.push(vuelo);
   }
 
-  cantidadDeVueltos() {
+  cantidadDeVuelos() {
     return this.vuelos.length;
   }
 
@@ -88,6 +88,17 @@ class Agencia {
   pasajesDe(pasajero) {
     return this.vuelosDeUnPasajero(pasajero).map((vuelo) =>
       vuelo.pasajeDe(pasajero)
+    );
+  }
+
+  pagosRealizadosPor(pasajero) {
+    return _.sumBy(this.pasajesDe(pasajero), (pasaje) => pasaje.pagoRealizado);
+  }
+
+  deudaDeUn(pasajero) {
+    return (
+      this.totalDeComprasDelPasajero(pasajero) -
+      this.pagosRealizadosPor(pasajero)
     );
   }
 

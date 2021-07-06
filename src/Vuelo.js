@@ -63,13 +63,13 @@ module.exports = class Vuelo {
 
   tienePasaje(pasajero) {
     return this.pasajesVendidos.some(
-      (pasaje) => pasaje.pasajero.dni == pasajero.dni
+      (pasaje) => pasaje.pasajero.dni === pasajero.dni
     );
   }
 
   pasajeDe(pasajero) {
     return this.pasajesVendidos.find(
-      (pasaje) => pasaje.pasajero.dni == pasajero.dni
+      (pasaje) => pasaje.pasajero.dni === pasajero.dni
     );
   }
 
