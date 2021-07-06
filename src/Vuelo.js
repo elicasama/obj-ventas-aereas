@@ -81,7 +81,7 @@ module.exports = class Vuelo {
     return this.pasajeDe(pasajero).registrarPago(importe);
   }
 
-  esInercontinental() {
+  esIntercontinental() {
     return this.origen.continente !== this.destino.continente;
   }
 };

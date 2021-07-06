@@ -109,12 +109,12 @@ describe("Pasajes comprados y pagados", () => {
   });
 
   describe("Pago de los pasajes", () => {
-    it("Si pagó una parte del pasaje debe quedar el resto Ej Pasaje = 600 Pago Realizado = 100 Restan = 300", () => {
+    it("Si pagó una parte del pasaje debe quedar el resto Ejemplo: Pasaje = 600 Pago Realizado = 100 Restan = 300", () => {
       buenosAiresMadrid.pagarUnPasaje(pasajero, 100);
 
       assert.equal(500, pasajeBuenosAiresMadrid.saldoAPagar());
     });
-    it("Si realiza varios pagos tiene que ir descontando Ej Pasaje = 600 Pagos Realizados = 100 * 3  Restan = 300", () => {
+    it("Si realiza varios pagos tiene que ir descontando Ejemplo: Pasaje = 600 Pagos Realizados = 100 * 3  Restan = 300", () => {
       buenosAiresMadrid.pagarUnPasaje(pasajero, 100);
       buenosAiresMadrid.pagarUnPasaje(pasajero, 100);
       buenosAiresMadrid.pagarUnPasaje(pasajero, 100);

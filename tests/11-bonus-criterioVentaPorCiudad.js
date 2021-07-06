@@ -24,15 +24,14 @@ describe("Permitir la venta según la ciudad de origen", () => {
       new Estricta()
     );
 
-    vueloDePasajeros.pasajesVendidos = [];
     pasajero = new Pasajero(26581333);
-    agencia.ciudadesOrigenConCriterio = [];
+    agencia.reiniciarCiudadesOrigenConCriterio();
 
     buenosAires = new Ciudad("Buenos Aires", "America");
   });
 
   it("Se puede vender un pasaje si la ciudad de origen tiene un criterio que deja vender", () => {
-    agencia.agregarciudadeOrigenConCriterio(buenosAires, new LaxaFija());
+    agencia.agregarCiudaDeOrigenConCriterio(buenosAires, new LaxaFija());
 
     for (i = 0; i < 9; i++) {
       vueloDePasajeros.venderPasaje("22-03-2021", pasajero); // 100 + 10% = 110 originales - Vendí 10 quedan 100 para vender
@@ -49,7 +48,7 @@ describe("Permitir la venta según la ciudad de origen", () => {
     assert.equal(true, vueloDePasajeros.sePuedeVenderUnPasaje());
   });
   it("No se puede vender si el criterio de la ciudad de origen no lo permite", () => {
-    agencia.agregarciudadeOrigenConCriterio(buenosAires, new LaxaPorcentual());
+    agencia.agregarCiudaDeOrigenConCriterio(buenosAires, new LaxaPorcentual());
 
     for (i = 0; i < 111; i++) {
       vueloDePasajeros.venderPasaje("22-03-2021", pasajero); // 100 + 10% = 110 originales - Vendí 110 No quedan para vender

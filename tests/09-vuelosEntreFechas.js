@@ -80,7 +80,7 @@ describe("Vuelos entre fechas", () => {
 
       assert.deepEqual(
         [vueloCharter, vueloDePasajeros2],
-        agencia.vuelosParaDestinoEntreFechas(
+        agencia.vuelosParaUnDestinoEntreFechas(
           "Tahiti",
           "2021-05-12",
           "2024-05-10"

@@ -45,7 +45,7 @@ class Agencia {
     return this.vuelos.filter((vuelo) => vuelo.destino == destino);
   }
 
-  vuelosParaDestinoEntreFechas(destino, fecha1, fecha2) {
+  vuelosParaUnDestinoEntreFechas(destino, fecha1, fecha2) {
     return this.vuelosEntreFechas(fecha1, fecha2).filter(
       (vuelo) => vuelo.destino == destino
     );
@@ -53,7 +53,7 @@ class Agencia {
 
   asientosLibresEntreVuelos(destino, fecha1, fecha2) {
     return _.sumBy(
-      this.vuelosParaDestinoEntreFechas(destino, fecha1, fecha2),
+      this.vuelosParaUnDestinoEntreFechas(destino, fecha1, fecha2),
       (vuelo) => vuelo.cantidadAsientosLibres()
     );
   }
@@ -62,7 +62,7 @@ class Agencia {
     return _.countBy(this.vuelos, (vuelo) => vuelo.tienePasaje(pasajero)).true;
   }
 
-  agregarciudadeOrigenConCriterio(ciudad, criterio) {
+  agregarCiudaDeOrigenConCriterio(ciudad, criterio) {
     ciudad.criterio = criterio;
     this.ciudadesOrigenConCriterio.push(ciudad);
   }
@@ -77,7 +77,7 @@ class Agencia {
 
   vuelosIntercontinentalesParaUnDía(fecha) {
     return this._vuelosParaUnaFecha(fecha).filter((vuelo) =>
-      vuelo.esInercontinental()
+      vuelo.esIntercontinental()
     );
   }
 
@@ -100,6 +100,10 @@ class Agencia {
       this.totalDeComprasDelPasajero(pasajero) -
       this.pagosRealizadosPor(pasajero)
     );
+  }
+
+  reiniciarCiudadesOrigenConCriterio() {
+    this.ciudadesOrigenConCriterio = [];
   }
 
   _vuelosParaUnaFecha(fecha) {

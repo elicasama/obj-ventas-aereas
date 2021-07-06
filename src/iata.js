@@ -1,5 +1,5 @@
-class iata {
+class Iata {
   pesoEstandar = 70;
 }
 
-module.exports = new iata();
+module.exports = new Iata();

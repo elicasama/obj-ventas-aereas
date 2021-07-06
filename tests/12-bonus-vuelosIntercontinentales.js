@@ -88,11 +88,11 @@ describe("Vuelos Intercontinentales", () => {
     agencia.agregarVuelo(francia_brasil); // fecha "2022-04-15" - intercontinental
   });
   it("Debe indicar si un vuelo es intercontinental", () => {
-    assert.equal(true, buenosAires_madrid.esInercontinental());
+    assert.equal(true, buenosAires_madrid.esIntercontinental());
   });
 
   it("Debe indicar si un vuelo no es intercontinental", () => {
-    assert.equal(false, buenosAires_brasil.esInercontinental());
+    assert.equal(false, buenosAires_brasil.esIntercontinental());
   });
 
   it("Debe devolver la cantidad de vuelos para el 2021-05-12 ", () => {
