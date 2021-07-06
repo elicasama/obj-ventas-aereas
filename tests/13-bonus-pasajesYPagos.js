@@ -1,4 +1,5 @@
 var assert = require("assert");
+var _ = require("lodash");
 const Avion = require("../src/Avion");
 const VueloDePasajeros = require("../src/VueloDePasajeros");
 const Estricta = require("../src/Estricta");
@@ -67,12 +68,13 @@ describe.only("Pasajes comprados y pagados", () => {
     pasajero = new Pasajero(11111111);
 
     buenosAiresMadrid.venderPasaje("2020-04-15", pasajero); // Importe de compra: 600
-    buenosAiresNigeria.venderPasaje("2020-06-10", pasajero); // Importe de compra: 1000
-    buenosAiresBrasil.venderPasaje("2020-07-11", pasajero); // Importe de compra: 150
+    pasajeBuenosAiresMadrid = _.last(buenosAiresMadrid.pasajesVendidos);
 
-    pasajeBuenosAiresMadrid = new Pasaje("2020-04-15", pasajero, 600);
-    pasajeBuenosAiresBrasil = new Pasaje("2020-07-11", pasajero, 150);
-    pasajeBuenosAiresNigeria = new Pasaje("2020-06-10", pasajero, 1000);
+    buenosAiresNigeria.venderPasaje("2020-06-10", pasajero); // Importe de compra: 1000
+    pasajeBuenosAiresNigeria = _.last(buenosAiresNigeria.pasajesVendidos);
+    
+    buenosAiresBrasil.venderPasaje("2020-07-11", pasajero); // Importe de compra: 150
+    pasajeBuenosAiresBrasil = _.last(buenosAiresBrasil.pasajesVendidos);
   });
 
   describe("Pasajes comprados por un pasajero y el importe de los mismos", () => {
@@ -85,7 +87,6 @@ describe.only("Pasajes comprados y pagados", () => {
         buenosAiresBrasil.pasajeDe(pasajero)
       );
     });
-
     it("Mostrar los pasajes de un pasajero", () => {
       assert.deepEqual(
         [
@@ -96,13 +97,26 @@ describe.only("Pasajes comprados y pagados", () => {
         agencia.pasajesDe(pasajero)
       );
     });
-
     it("Mostrar el importe abonado en un pasaje, por ejemplo buenosAiresBrasil", () => {
       assert.equal(150, buenosAiresBrasil.importeDeUnPasajeVendido(pasajero));
     });
-
     it("Calcular el importe total de los pasajes comprados", () => {
       assert.equal(1750, agencia.totalDeComprasDelPasajero(pasajero));
     });
+  });
+
+  describe("Pago de los pasajes", () => {
+    it("Si pagó una parte del pasaje debe quedar el resto Ej Pasaje = 600 Pago Realizado = 100 Restan = 300", () => {
+      buenosAiresMadrid.pagarUnPasaje(pasajero, 100);
+
+      assert.equal(500, pasajeBuenosAiresMadrid.saldoAPagar());
+    });
+    it("Si realiza varios pagos tiene que ir descontando Ej Pasaje = 600 Pago Realizado = 100 * 3  Restan = 300", () => {
+        buenosAiresMadrid.pagarUnPasaje(pasajero, 100);
+        buenosAiresMadrid.pagarUnPasaje(pasajero, 100);
+        buenosAiresMadrid.pagarUnPasaje(pasajero, 100);
+  
+        assert.equal(300, pasajeBuenosAiresMadrid.saldoAPagar());
+      });
   });
 });
