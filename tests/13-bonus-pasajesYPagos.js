@@ -8,7 +8,7 @@ const agencia = require("../src/Agencia");
 const Ciudad = require("../src/Ciudad");
 const Pasajero = require("../src/Pasajero");
 
-describe.only("Pasajes comprados y pagados", () => {
+describe("Pasajes comprados y pagados", () => {
   let buenosAiresMadrid,
     buenosAiresBrasil,
     buenosAiresNigeria,
@@ -121,7 +121,7 @@ describe.only("Pasajes comprados y pagados", () => {
 
       assert.equal(300, pasajeBuenosAiresMadrid.saldoAPagar());
     });
-    it.only("Saber el total de los pagos realizado para el vuelo por distintos pasajeros", () => {
+    it("Saber el total de los pagos realizado para el vuelo por distintos pasajeros", () => {
       // Sabemos que el total abonado por los pasajes para este vuelo es de 1200 gracias a buenosAiresMadrid.importeVendido()
 
       buenosAiresMadrid.pagarUnPasaje(pasajero, 200);
