@@ -74,6 +74,14 @@ class Agencia {
       )?.criterio || this.criterio
     );
   }
+
+  vuelosIntercontinentalesParaUnDía(fecha) {
+    return this._vuelosParaUnaFecha(fecha).filter((vuelo) => vuelo.esInercontinental());
+  }
+
+  _vuelosParaUnaFecha(fecha) {
+    return this.vuelos.filter((vuelo) => vuelo.fecha == fecha)
+  }
 }
 
 module.exports = new Agencia();

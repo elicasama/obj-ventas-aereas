@@ -48,12 +48,10 @@ module.exports = class Vuelo {
   }
 
   sePuedeVenderUnPasaje() {
-   return agencia.criterioDelaCiudadOrigen(this.origen).puedoVenderUnPasaje(this);
+    return agencia
+      .criterioDelaCiudadOrigen(this.origen)
+      .puedoVenderUnPasaje(this);
   }
-
-  // sePuedeVenderUnPasaje() {
-  //   return agencia.criterioDelaCiudadOrigen(this.origen).puedoVenderUnPasaje(this);
-  // }
 
   sePuedeVenderUnPasajePorCiudad() {
     return agencia
@@ -69,5 +67,9 @@ module.exports = class Vuelo {
     return this.pasajesVendidos.some(
       (pasaje) => pasaje.pasajero.dni == pasajero.dni
     );
+  }
+
+  esInercontinental() {
+    return this.origen.continente !== this.destino.continente;
   }
 };
